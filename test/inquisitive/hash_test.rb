@@ -6,8 +6,8 @@ module Inquisitive
     def setup
       super
       @hash = Inquisitive::Hash.new @raw_hash
-      @string = @hash[:in]
-      @array = @hash[:databases]
+      @string = @hash.in
+      @array = @hash.databases
     end
 
     include HashTests

@@ -1,6 +1,16 @@
 module Inquisitive
   class HashWithIndifferentAccess < ::Hash
 
+    def self.new_from_hash_copying_default(hash)
+      new(hash).tap do |new_hash|
+        new_hash.default = hash.default
+      end
+    end
+
+    def self.[](*args)
+      new.merge!(::Hash[*args])
+    end
+
     def initialize(constructor = {})
       if constructor.is_a?(::Hash)
         super()
@@ -16,16 +26,6 @@ module Inquisitive
       else
         super
       end
-    end
-
-    def self.new_from_hash_copying_default(hash)
-      new(hash).tap do |new_hash|
-        new_hash.default = hash.default
-      end
-    end
-
-    def self.[](*args)
-      new.merge!(::Hash[*args])
     end
 
     alias_method :regular_writer, :[]= unless method_defined?(:regular_writer)
@@ -98,12 +98,18 @@ module Inquisitive
         if options[:for] == :to_hash
           value.to_hash
         else
-          # value.nested_under_indifferent_access
-          if value.is_a? HashWithIndifferentAccess
-            self
+          ####
+          # ONLY MODIFICATION TO EXISTING CODE
+          # from:
+          #   value.nested_under_indifferent_access
+          # so that we needn't add that method to Hash
+          if value.is_a? self.class
+            value
           else
-            HashWithIndifferentAccess.new_from_hash_copying_default value
+            self.class.new_from_hash_copying_default value
           end
+          # End Modification
+          ####
         end
       elsif value.is_a?(Array)
         unless options[:for] == :assignment

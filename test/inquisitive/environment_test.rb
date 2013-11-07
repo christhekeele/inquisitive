@@ -50,6 +50,13 @@ module Inquisitive
             )
           end
 
+          def test_variable_is_converted_correctly
+            assert_kind_of(
+              Inquisitive.const_get(:"#{@variable.capitalize}"),
+              App.send(@variable)
+            )
+          end
+
         end
       ).tap do |klass|
       klass.mode = mode
