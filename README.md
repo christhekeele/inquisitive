@@ -34,9 +34,9 @@ environment.not.development?
 ```ruby
 supported_databases = Inquisitive::Array.new %w[mysql postgres sqlite]
 #=> ["mysql", "postgres", "sqlite"]
-supported_databases.include.postgres?
+supported_databases.postgres?
 #=> true
-supported_databases.include.sql_server?
+supported_databases.sql_server?
 #=> false
 supported_databases.exclude.sql_server?
 #=> true
@@ -71,9 +71,9 @@ stubbed.in.development?
 #=> true
 stubbed.in.production?
 #=> false
-stubbed.services.include.database?
+stubbed.services.database?
 #=> true
-stubbed.services.include.sidekiq?
+stubbed.services.sidekiq?
 #=> false
 ```
 
@@ -109,9 +109,9 @@ end
 
 MyGame.supported_databases
 #=> ["mysql", "postgres", "sqlite"]
-MyGame.supported_databases.include.sqlite?
+MyGame.supported_databases.sqlite?
 #=> true
-MyGame.supported_databases.include.sql_server?
+MyGame.supported_databases.sql_server?
 #=> false
 ```
 
@@ -136,7 +136,7 @@ MyGame.stubbed.in.production?
 #=> false
 MyGame.stubbed.services.exclude.sidekiq?
 #=> true
-MyGame.stubbed.services.include.sidekiq?
+MyGame.stubbed.services.sidekiq?
 #=> false
 ```
 

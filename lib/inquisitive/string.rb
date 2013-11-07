@@ -2,10 +2,6 @@ module Inquisitive
   class String < ::String
     include Inquisitive
 
-    class << self
-      alias_method :make_inquisitive, :new
-    end
-
     attr_accessor :negated
     def not
       self.dup.tap{ |s| s.negated = !s.negated }
@@ -25,5 +21,4 @@ module Inquisitive
     end
 
   end
-
 end

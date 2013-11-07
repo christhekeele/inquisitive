@@ -1,4 +1,5 @@
-require 'pry'
+lib = File.expand_path('..', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 module Inquisitive
 
@@ -6,7 +7,7 @@ module Inquisitive
 
     def [](object)
       if Inquisitive.constants.include?(:"#{object.class}") and Inquisitive.const_get(:"#{object.class}").is_a?(Class)
-        Inquisitive.const_get(:"#{object.class}").make_inquisitive object
+        Inquisitive.const_get(:"#{object.class}").new object
       else
         object
       end
@@ -14,13 +15,13 @@ module Inquisitive
 
     def present?(object)
       case object
-      when String
+      when ::String
         not object.empty?
-      when Array
+      when ::Array
         object.any? do |value|
           Inquisitive.present? value
         end
-      when Hash
+      when ::Hash
         object.values.any? do |value|
           Inquisitive.present? value
         end
@@ -43,12 +44,10 @@ private
 
 end
 
+require "inquisitive/string"
+require "inquisitive/array"
 unless Object.const_defined? :HashWithIndifferentAccess
-  require_relative "inquisitive/hash_with_indifferent_access"
+  require "inquisitive/hash_with_indifferent_access"
 end
-require_relative "inquisitive/string"
-require_relative "inquisitive/array"
-require_relative "inquisitive/hash"
-require_relative "inquisitive/environment"
-
-binding.pry
+require "inquisitive/hash"
+require "inquisitive/environment"

@@ -5,7 +5,7 @@ module Inquisitive
     def inquires_about(env_var, opts={})
 
       env_accessor = opts.fetch(:with, env_var.downcase)
-      @__env_accessors__ ||= {}
+      @__env_accessors__ ||= HashWithIndifferentAccess.new
       @__env_accessors__[env_accessor] = env_var
 
       mode = Inquisitive::String.new opts.fetch(:mode, :dynamic).to_s
@@ -18,7 +18,7 @@ module Inquisitive
 
       else
 
-        @__cached_env__ ||= {}
+        @__cached_env__ ||= HashWithIndifferentAccess.new
         @__cached_env__[env_accessor] = Inquisitive[Parser[env_var]] if mode.static?
 
         define_singleton_method :"#{env_accessor}" do
@@ -44,7 +44,7 @@ module Inquisitive
             env_var = ENV[var_name]
 
             if env_var.include? ','
-              env_var.split ','
+              env_var.split(',').map(&:strip)
             else
               env_var
             end

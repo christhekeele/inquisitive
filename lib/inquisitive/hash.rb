@@ -1,23 +1,10 @@
 module Inquisitive
-  class Hash < Inquisitive::HashWithIndifferentAccess
+  class Hash < HashWithIndifferentAccess
     include Inquisitive
 
     attr_accessor :negated
-    def not
-      self.dup.tap{ |s| s.negated = !s.negated }
-    end
-
-    class << self
-      alias_method :make_inquisitive, :new
-    end
-
-    def initialize(constructor=nil)
-      if constructor.is_a?(::Hash)
-        super()
-        update(constructor)
-      else
-        super(constructor)
-      end
+    def no
+      dup.tap{ |s| s.negated = !s.negated }
     end
 
     def convert_value(value, options={})
@@ -26,16 +13,20 @@ module Inquisitive
 
   private
 
+    def dup
+      super.tap{ |duplicate| duplicate.negated = self.negated }
+    end
+
     def respond_to_missing?(method_name, include_private = false)
       predicate_method?(method_name) or has_key?(method_name)
     end
     def method_missing(method_name, *arguments)
       if predicate_method? method_name
         if has_key? predication(method_name)
-          (Inquisitive.present? self[predication(method_name)]) ^ negated
+          Inquisitive.present? self[predication(method_name)]
         else
           false
-        end
+        end ^ negated
       elsif has_key? method_name
         self[method_name]
       else
