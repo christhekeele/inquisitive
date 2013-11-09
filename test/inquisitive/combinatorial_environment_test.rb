@@ -30,10 +30,6 @@ class InquisitiveCombinatorialEnvironmentTest < EnvironmentTest
 
 end
 
-####
-# Combinatorial tests to weed out
-# unexpected divergent behaviour of modes and types.
-##
 %w[dynamic cached static].each do |mode|
   %w[string array hash].each do |type|
 
@@ -69,7 +65,8 @@ end
       klass.mode = mode
       klass.type = type
     end.send :include, Object.const_get(:"#{type.capitalize}Tests")
+    # Mixes in type-specific tests to ensure lookup behaves normally
+    #  when accessed through the modes of App getters
 
   end
-
 end
