@@ -26,4 +26,7 @@ module ArrayTests
   def test_array_respond_to
     assert_respond_to array, :postgres?
   end
+  def test_array_method_missing
+    assert_raises(NoMethodError) { array.undefined }
+  end
 end

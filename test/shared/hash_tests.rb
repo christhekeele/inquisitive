@@ -20,4 +20,7 @@ module HashTests
   def test_hash_respond_to
     assert_respond_to hash, :authentication?
   end
+  def test_hash_method_missing
+    assert_raises(NoMethodError) { hash.undefined }
+  end
 end

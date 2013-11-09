@@ -26,4 +26,7 @@ module StringTests
   def test_string_respond_to
     assert_respond_to string, :development?
   end
+  def test_string_method_missing
+    assert_raises(NoMethodError) { string.undefined }
+  end
 end

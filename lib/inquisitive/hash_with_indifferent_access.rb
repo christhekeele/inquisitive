@@ -1,27 +1,34 @@
 module Inquisitive
 ####
 # A trimmed down version of ActiveSupport 4.0's HashWithIndifferentAccess
-#  with instanciation and basic read/write only (no deep_merging, etc)
 #  modified slightly so we don't have to inject behaviour into Hash.
+# It lacks all `deep_` transforms since that requires patching Object and Array.
 ##
   class HashWithIndifferentAccess < ::Hash
 
-    def self.new_from_hash_copying_default(hash)
-      new(hash).tap do |new_hash|
-        new_hash.default = hash.default
-      end
+    def extractable_options?
+      true
+    end
+    def with_indifferent_access
+      dup
+    end
+    def nested_under_indifferent_access
+      self
     end
 
     def self.[](*args)
       new.merge!(::Hash[*args])
     end
 
-    def initialize(constructor = {})
+    def initialize(constructor = {}, &block)
       if constructor.is_a?(::Hash)
         super()
+        steal_default_from(constructor)
         update(constructor)
       else
         super(constructor)
+      end.tap do |hash|
+        self.default_proc = block if block_given?
       end
     end
 
@@ -30,6 +37,14 @@ module Inquisitive
         self[key]
       else
         super
+      end
+    end
+
+    def steal_default_from(hash)
+      if hash.default_proc
+        self.default_proc = hash.default_proc
+      else
+        self.default = hash.default
       end
     end
 
@@ -43,13 +58,7 @@ module Inquisitive
     alias_method :store, :[]=
 
     def update(other_hash)
-      ####
-      # modification
-      # from:
-      #   if other_hash.is_a? HashWithIndifferentAccess
       if other_hash.is_a? self.class
-      # end modification
-      ####
         super(other_hash)
       else
         other_hash.each_pair do |key, value|
@@ -86,6 +95,52 @@ module Inquisitive
       end
     end
 
+    def merge(hash, &block)
+      self.dup.update(hash, &block)
+    end
+
+    def replace(other_hash)
+      super(self.class.new(other_hash))
+    end
+
+    def delete(key)
+      super(convert_key(key))
+    end
+
+    def transform_keys
+      result = {}
+      each_key do |key|
+        result[yield(key)] = self[key]
+      end
+      result
+    end
+
+    def transform_keys!
+      keys.each do |key|
+        self[yield(key)] = delete(key)
+      end
+      self
+    end
+
+    def symbolize_keys
+      transform_keys{ |key| key.to_sym rescue key }
+    end
+
+    def symbolize_keys!
+      transform_keys!{ |key| key.to_sym rescue key }
+    end
+
+    def assert_valid_keys(*valid_keys)
+      valid_string_keys = valid_keys.flatten.map(&:to_s).uniq
+      each_key do |k|
+        raise ArgumentError.new("Unknown key: #{k}") unless valid_string_keys.include?(k)
+      end
+    end
+
+    def stringify_keys!; self end
+    def stringify_keys; dup end
+    def to_options!; self end
+
     def select(*args, &block)
       dup.tap {|hash| hash.select!(*args, &block)}
     end
@@ -95,7 +150,7 @@ module Inquisitive
       each do |key, value|
         _new_hash[convert_key(key)] = convert_value(value, for: :to_hash)
       end
-      Hash.new(default).merge!(_new_hash)
+      ::Hash.new(default).merge!(_new_hash)
     end
 
   protected
@@ -109,20 +164,13 @@ module Inquisitive
         if options[:for] == :to_hash
           value.to_hash
         else
-          ####
-          # modification
-          # from:
-          #   value.nested_under_indifferent_access
-          # so that we needn't add that method to Hash
           if value.is_a? self.class
             value
           else
-            self.class.new_from_hash_copying_default value
+            self.class.new value
           end
-          # end modification
-          ####
         end
-      elsif value.is_a?(Array)
+      elsif value.is_a?(::Array)
         unless options[:for] == :assignment
           value = value.dup
         end

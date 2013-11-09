@@ -20,6 +20,19 @@ class Test < MiniTest::Test
     assert_equal old, lambda_getter.call
   end
 
+  def refute_raise
+    nothing_raised = true
+    message = 'Nothing raised.'
+    begin
+      yield
+    rescue => e
+      nothing_raised = false
+      message = "Expected nothing to be raised, caught: #{e.exception}:\n" \
+                "#{e.backtrace.join("\n")}"
+    end
+    assert nothing_raised, message
+  end
+
   def setup
     @raw_string = 'production'
     @raw_array  = %w[mysql postgres sqlite]
