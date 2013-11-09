@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class InquisitiveTest < Test
-  Misc = Class.new
   Helpers = Module.new.extend Inquisitive
-  HashWithIndifferentAccess = Inquisitive::HashWithIndifferentAccess
+  HashWithIndifferentAccess ||= Inquisitive::HashWithIndifferentAccess
 
   def setup
     super

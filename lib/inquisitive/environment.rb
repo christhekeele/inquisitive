@@ -8,7 +8,7 @@ module Inquisitive
       @__env_accessors__ ||= HashWithIndifferentAccess.new
       @__env_accessors__[env_accessor] = env_var
 
-      mode = Inquisitive::String.new opts.fetch(:mode, :dynamic).to_s
+      mode = Inquisitive[ opts.fetch(:mode, :dynamic).to_s ]
 
       if mode.dynamic?
 
@@ -31,8 +31,17 @@ module Inquisitive
 
       end
 
+      present_if = opts.fetch(:present_if, nil)
+
+      @__env_presence__ ||= HashWithIndifferentAccess.new
+      @__env_presence__["#{env_accessor}?"] = present_if if present_if
+
       define_singleton_method :"#{env_accessor}?" do
-        Inquisitive.present? send(predication(__method__))
+        if @__env_presence__.has_key? __method__
+          @__env_presence__[__method__] === send(predication(__method__))
+        else
+          Inquisitive.present? send(predication(__method__))
+        end
       end
     end
 

@@ -1,6 +1,6 @@
 require "rubygems"
-require "minitest/autorun"
 require "simplecov"
+require "minitest/autorun"
 
 SimpleCov.start do
   add_filter "/test"
@@ -29,11 +29,26 @@ class Test < MiniTest::Test
       databases: @raw_array
     }
   end
+
 end
 
-require "support/string_tests"
-require "support/array_tests"
-require "support/hash_tests"
-require "support/environment_tests"
+class EnvironmentTest < Test
+
+  def setup
+    super
+    Object.const_set :App, Module.new
+    App.extend Inquisitive::Environment
+  end
+  def teardown
+    super
+    Object.send :remove_const, :App
+  end
+
+end
+
+require "shared/string_tests"
+require "shared/array_tests"
+require "shared/hash_tests"
+require "shared/combinatorial_environment_tests"
 
 require "inquisitive"

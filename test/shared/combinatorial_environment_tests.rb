@@ -1,4 +1,4 @@
-module EnvironmentTests
+module CombinatorialEnvironmentTests
 
   def test_type_is_parsed_correctly
     assert_kind_of(

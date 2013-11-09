@@ -3,11 +3,9 @@ module Inquisitive
   class << self
 
     def [](object)
-      if Inquisitive.constants.include?(:"#{object.class}") and Inquisitive.const_get(:"#{object.class}").is_a?(Class)
-        Inquisitive.const_get(:"#{object.class}").new object
-      else
-        object
-      end
+      Inquisitive.const_get(:"#{object.class}", false).new object
+    rescue NameError
+      object
     end
 
     def present?(object)

@@ -1,4 +1,9 @@
 module Inquisitive
+####
+# A trimmed down version of ActiveSupport 4.0's HashWithIndifferentAccess
+#  with instanciation and basic read/write only (no deep_merging, etc)
+#  modified slightly so we don't have to inject behaviour into Hash.
+##
   class HashWithIndifferentAccess < ::Hash
 
     def self.new_from_hash_copying_default(hash)
@@ -38,7 +43,13 @@ module Inquisitive
     alias_method :store, :[]=
 
     def update(other_hash)
-      if other_hash.is_a? HashWithIndifferentAccess
+      ####
+      # modification
+      # from:
+      #   if other_hash.is_a? HashWithIndifferentAccess
+      if other_hash.is_a? self.class
+      # end modification
+      ####
         super(other_hash)
       else
         other_hash.each_pair do |key, value|
@@ -99,7 +110,7 @@ module Inquisitive
           value.to_hash
         else
           ####
-          # ONLY MODIFICATION TO EXISTING CODE
+          # modification
           # from:
           #   value.nested_under_indifferent_access
           # so that we needn't add that method to Hash
@@ -108,7 +119,7 @@ module Inquisitive
           else
             self.class.new_from_hash_copying_default value
           end
-          # End Modification
+          # end modification
           ####
         end
       elsif value.is_a?(Array)
@@ -122,4 +133,5 @@ module Inquisitive
     end
 
   end
+
 end

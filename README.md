@@ -77,6 +77,22 @@ stubbed.services.sidekiq?
 #=> false
 ```
 
+`Inquisitive::Hash` also allows negation with the `no` method:
+
+```ruby
+config = Inquisitive::Hash.new(database: 'postgres')
+#=> {"database"=>"postgres"}
+
+config.database?
+#=> true
+config.no.database?
+#=> false
+config.api?
+#=> false
+config.no.api?
+#=> true
+```
+
 ### Inquisitive Environment
 
 `Inquisitive::Environment` can be used in your modules and classes to more easily interrogate the `ENV` variable:
@@ -84,10 +100,10 @@ stubbed.services.sidekiq?
 #### Strings
 
 ```ruby
-ENV['GAME_ENV'] = "development"
+ENV['ENVIRONMENT'] = "development"
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'GAME_ENV', with: :environment
+  inquires_about 'ENVIRONMENT'
 end
 
 MyGame.environment
@@ -101,10 +117,10 @@ MyGame.environment.production?
 #### Arrays
 
 ```ruby
-ENV['ENABLED_DBS'] = "mysql,postgres,sqlite"
+ENV['SUPPORTED_DATABASES'] = "mysql,postgres,sqlite"
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'ENABLED_DBS', with: :supported_databases
+  inquires_about 'SUPPORTED_DATABASES'
 end
 
 MyGame.supported_databases
@@ -123,31 +139,97 @@ ENV['STUB_IN'] = "development"
 ENV['STUB_SERVICES'] = "database,api"
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'STUB', with: :stubbed
+  inquires_about 'STUB'
 end
 
-MyGame.stubbed.authentication?
+MyGame.stub.authentication?
 #=> true
-MyGame.stubbed.registration?
+MyGame.stub.registration?
 #=> false
-MyGame.stubbed.in.development?
+MyGame.stub.in.development?
 #=> true
-MyGame.stubbed.in.production?
+MyGame.stub.in.production?
 #=> false
-MyGame.stubbed.services.exclude.sidekiq?
+MyGame.stub.services.exclude.sidekiq?
 #=> true
-MyGame.stubbed.services.sidekiq?
+MyGame.stub.services.sidekiq?
 #=> false
 ```
 
+#### Naming
+
+You can name your environment inquirers with `:with`:
+
+```ruby
+ENV['ENVIRONMENT'] = "development"
+class MyGame
+  extend Inquisitive::Environment
+  inquires_about 'ENVIRONMENT', with: :env
+end
+
+MyGame.env
+#=> "development"
+MyGame.env.development?
+#=> true
+MyGame.env.production?
+#=> false
+```
+
+#### Presence
+
+Environment inquirers can have explicit presence checks, circumventing a common pitfall when reasoning about environment variables. Borrowing from the example above:
+
+```ruby
+ENV['STUB_AUTHENTICATION'] = 'false'
+class MyGame
+  extend Inquisitive::Environment
+  inquires_about 'STUB'
+end
+
+MyGame.stub.authentication
+#=> "false"
+MyGame.stub.authentication?
+#=> true
+MyGame.stub.authentication.true?
+#=> false
+```
+
+It's common to use the presence of environment variables as runtime booleans. This is frequently done by setting the environment variable to the string `"true"` when you want it to be true, and not at all otherwise. As demonstrated, this pattern can lead to ambiguity when the string is other values.
+
+By default such variables will be parsed as an `Inquisitive::String`, so predicate methods will return true whatever their contents, as long as they exist. You can bind the predicate method tighter to an explicit value if you prefer:
+
+```ruby
+ENV['STUB_AUTHENTICATION'] = 'false'
+ENV['STUB_REGISTRATION'] = 'true'
+class MyGame
+  extend Inquisitive::Environment
+  inquires_about 'STUB_AUTHENTICATION', present_if: 'true'
+  inquires_about 'STUB_REGISTRATION', present_if: 'true'
+end
+
+MyGame.stub_authentication
+#=> "false"
+MyGame.stub_authentication?
+#=> false
+
+MyGame.stub_registration
+#=> "true"
+MyGame.stub_registration?
+#=> true
+```
+
+This only works on top-level inquirers, so there's no way to get our nested `MyGame.stubbed.authentication?` to behave as expected (currently).
+
+The `present_if` check uses `===` under the covers for maximum expressiveness, so you can also use it to match against regexs and other constructs.
+
 #### Inquiry mode
 
-Environment inquires have three configurable modes, defaulting to `:dynamic`:
+Environment inquirers have three configurable modes, defaulting to `:dynamic`:
 
 ```ruby
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'STUB', with: :stubbed, mode: %i[dynamic cached static].sample
+  inquires_about 'STUB', mode: %i[dynamic cached static].sample
 end
 ```
 

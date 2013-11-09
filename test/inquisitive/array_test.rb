@@ -1,12 +1,11 @@
 require 'test_helper'
 
-module Inquisitive
-  class ArrayTest < Test
+class InquisitiveArrayTest < Test
 
-    def array
-      Inquisitive::Array.new @raw_array
-    end
-
-    include ArrayTests
+  def array
+    Inquisitive::Array.new @raw_array
   end
+
+  include ArrayTests
+
 end

@@ -1,12 +1,11 @@
 require 'test_helper'
 
-module Inquisitive
-  class StringTest < Test
+class StringTest < Test
 
-    def string
-      Inquisitive::String.new @raw_string
-    end
-
-    include StringTests
+  def string
+    Inquisitive::String.new @raw_string
   end
+
+  include StringTests
+
 end

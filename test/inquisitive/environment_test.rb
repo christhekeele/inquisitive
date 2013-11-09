@@ -1,82 +1,44 @@
 require 'test_helper'
 
-module Inquisitive
-  class EnvironmentTest < Test
+class InquisitiveEnvironmentTest < EnvironmentTest
 
-    def setup
-      super
-      ENV['STRING'] = @raw_string
-      ENV['ARRAY'] = @raw_array.join(',')
-      ENV['HASH_AUTHENTICATION'] = @raw_hash[:authentication].to_s
-      ENV['HASH_IN'] = @raw_hash[:in]
-      ENV['HASH_DATABASES'] = @raw_hash[:databases].join(',')
-      Object.const_set :App, Module.new
-      App.extend Inquisitive::Environment
-    end
-    def teardown
-      super
-      ENV.delete 'STRING'
-      ENV.delete 'ARRAY'
-      ENV.delete 'HASH_AUTHENTICATION'
-      ENV.delete 'HASH_IN'
-      ENV.delete 'HASH_DATABASES'
-      ENV.delete 'HASH_SOMETHING_NEW'
-      Object.send :remove_const, :App
-    end
-
-    def change_string_variable
-      ENV['STRING'] = 'something_new'
-    end
-    def change_array_variable
-      ENV['ARRAY'] = [ ENV['ARRAY'], 'something_new' ].join ','
-    end
-    def change_hash_variable
-      ENV['HASH_SOMETHING_NEW'] = 'true'
-    end
-
+  def test_missing_variable_responses
+    App.inquires_about '__DOES_NOT_EXIST__', with: :exists
+    assert_equal App.exists, nil
+  end
+  def test_missing_variable_predicates
+    App.inquires_about '__DOES_NOT_EXIST__', with: :exists
+    refute App.exists?
   end
 
-####
-# Combinatorial tests to weed out
-# unexpected divergent behaviour of modes and types.
-##
-  %w[dynamic cached static].each do |mode|
-    %w[string array hash].each do |type|
+  def test_autonaming_of_inquirers
+    App.inquires_about 'NAME_NOT_SPECIFIED'
+    assert App.respond_to? :name_not_specified
+  end
 
-      Inquisitive.const_set(
-        :"#{mode.capitalize}#{type.capitalize}EnvironmentTest",
-        Class.new(EnvironmentTest) do
+  def test_default_mode_of_dynamic
+    App.inquires_about 'DEFAULTS_TO', with: :defaults_to
+    App.defaults_to # Call once to ensure no caching
+    ENV['DEFAULTS_TO'] = 'dynamic'
+    assert App.defaults_to.dynamic?
+  end
 
-          class << self
-            attr_accessor :mode, :type
-          end
+  def test_custom_string_presence
+    ENV['AUTHORIZABLE'] = 'false'
+    App.inquires_about 'AUTHORIZABLE', present_if: 'true'
+    refute App.authorizable?
+  end
 
-          def setup
-            super
-            $mode = @mode = Inquisitive[self.class.mode]
-            $type = @type = Inquisitive[self.class.type]
-            App.inquires_about @type.upcase, mode: @mode
-          end
+  def test_custom_regex_presence
+    ENV['AUTHORIZABLE'] = 'not at all'
+    App.inquires_about 'AUTHORIZABLE', present_if: /yes/
+    refute App.authorizable?
+  end
 
-          def string
-            App.string
-          end
-          def array
-            App.array
-          end
-          def hash
-            App.hash
-          end
-
-          include EnvironmentTests
-
-        end
-      ).tap do |klass|
-        klass.mode = mode
-        klass.type = type
-      end.send :include, Object.const_get(:"#{type.capitalize}Tests")
-
-    end
+  def test_custom_class_presence
+    ENV['AUTHORIZABLE'] = 'not at all'
+    App.inquires_about 'AUTHORIZABLE', present_if: Array
+    refute App.authorizable?
   end
 
 end
