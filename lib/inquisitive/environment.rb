@@ -58,7 +58,7 @@ module Inquisitive
               env_var
             end
 
-          elsif Parser.env_key? var_name
+          else
 
             Parser.env_keys_from(var_name).reduce({}) do |hash, key|
               hash[Parser.key_for(key, var_name)] = Inquisitive[Parser[key]]
@@ -72,10 +72,6 @@ module Inquisitive
           ENV.keys.select do |key|
             key =~ /^#{var_name}_/
           end
-        end
-
-        def env_key?(var_name)
-          !env_keys_from(var_name).empty?
         end
 
         def key_for(env_key, var_name)
