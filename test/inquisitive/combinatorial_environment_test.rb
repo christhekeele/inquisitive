@@ -45,7 +45,7 @@ end
           super
           @mode = Inquisitive[self.class.mode]
           @type = Inquisitive[self.class.type]
-          App.inquires_about @type.upcase, mode: @mode
+          App.inquires_about @type.upcase + (@type == "hash" ? "_" : ""), mode: @mode
         end
 
         def string

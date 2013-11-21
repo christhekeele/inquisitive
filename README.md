@@ -139,7 +139,7 @@ ENV['STUB_IN'] = "development"
 ENV['STUB_SERVICES'] = "database,api"
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'STUB'
+  inquires_about 'STUB_'
 end
 
 MyGame.stub.authentication?
@@ -183,7 +183,7 @@ Environment inquirers can have explicit presence checks, circumventing a common 
 ENV['STUB_AUTHENTICATION'] = 'false'
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'STUB'
+  inquires_about 'STUB_'
 end
 
 MyGame.stub.authentication
@@ -229,7 +229,7 @@ Environment inquirers have three configurable modes, defaulting to `:dynamic`:
 ```ruby
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'STUB', mode: %i[dynamic cached static].sample
+  inquires_about 'STUB_', mode: %i[dynamic cached static].sample
 end
 ```
 

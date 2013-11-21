@@ -15,7 +15,7 @@ module CombinatorialEnvironmentTests
   end
 
   def test_changing_variable_after_definition
-    App.inquires_about @type.upcase, mode: @mode, with: :precache
+    App.inquires_about @type.upcase + (@type == "hash" ? "_" : ""), mode: @mode, with: :precache
     test = @mode.static? ? :assert_equal : :refute_equal
     precache = App.precache
     send :"change_#{@type}_variable"
