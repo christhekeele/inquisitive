@@ -4,7 +4,7 @@ module Inquisitive
 
     def inquires_about(env_var, opts={})
 
-      env_accessor = opts.fetch(:with, env_var.downcase)
+      env_accessor = opts.fetch(:with, env_var.downcase[/(.*?)(?=(?:_$|$))/])
       @__env_accessors__ ||= HashWithIndifferentAccess.new
       @__env_accessors__[env_accessor] = env_var
 
@@ -58,24 +58,30 @@ module Inquisitive
               env_var
             end
 
-          else
+          elsif hash_var? var_name
 
             Parser.env_keys_from(var_name).reduce({}) do |hash, key|
               hash[Parser.key_for(key, var_name)] = Inquisitive[Parser[key]]
               hash
             end
 
+          else
+            ""
           end
+        end
+
+        def hash_var?(var_name)
+          var_name[-1] == '_'
         end
 
         def env_keys_from(var_name)
           ENV.keys.select do |key|
-            key =~ /^#{var_name}_/
+            key =~ /^#{var_name}/
           end
         end
 
         def key_for(env_key, var_name)
-          env_key.gsub("#{var_name}_", '').downcase
+          env_key.gsub("#{var_name}", '').downcase
         end
 
       end

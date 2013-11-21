@@ -3,11 +3,20 @@ require 'test_helper'
 class InquisitiveEnvironmentTest < EnvironmentTest
 
   def test_missing_variable_responses
-    App.inquires_about '__DOES_NOT_EXIST__', with: :exists
-    assert_equal App.exists, {}
+    App.inquires_about 'DOES_NOT_EXIST', with: :exists
+    assert_equal App.exists, ""
   end
   def test_missing_variable_predicates
-    App.inquires_about '__DOES_NOT_EXIST__', with: :exists
+    App.inquires_about 'DOES_NOT_EXIST', with: :exists
+    refute App.exists?
+  end
+
+  def test_missing_hash_variable_responses
+    App.inquires_about 'DOES_NOT_EXIST_', with: :exists
+    assert_equal App.exists, {}
+  end
+  def test_missing_hash_variable_predicates
+    App.inquires_about 'DOES_NOT_EXIST_', with: :exists
     refute App.exists?
   end
 
