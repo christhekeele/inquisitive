@@ -6,9 +6,6 @@ Inquisitive
 Status
 ------
 
-[build-status]: https://circleci.com/gh/christhekeele/inquisitive/
-[coverage]:     https://coveralls.io/repos/christhekeele/inquisitive
-
 [master]:          https://github.com/christhekeele/inquisitive/tree/master
 [master-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
 [master-coverage]: https://coveralls.io/repos/christhekeele/inquisitive/badge.png?branch=master
@@ -17,10 +14,14 @@ Status
 [development-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
 [development-coverage]: https://coveralls.io/repos/christhekeele/inquisitive/badge.png?branch=development
 
-|          :thumbsup:        | [Continuous Integration][build-status] |         [Code Coverage][coverage]        |
-|:--------------------------:|:--------------------------------------:|:----------------------------------------:|
-| [Master][master]           | ![Build Status][master-status]         | ![Coverage Status][master-coverage]      |
-| [Development][development] | ![Build Status][development-status]    | ![Coverage Status][development-coverage] |
+|          :thumbsup:        |          Continuous Integration     |                 Code Coverage            |
+|:--------------------------:|:-----------------------------------:|:----------------------------------------:|
+| [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      |
+| [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] |
+
+
+Synopsis
+--------
 
 Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's `StringInquirer`.
 
@@ -41,7 +42,7 @@ $ bundle install
 Otherwise:
 
 ```bash
-gem install inquisitive
+$ gem install inquisitive
 ```
 
 Usage
