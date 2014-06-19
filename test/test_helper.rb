@@ -1,20 +1,23 @@
 require "rubygems"
 
-if ENV['CIRCLE_ARTIFACTS']
-  require "simplecov"
-  SimpleCov.coverage_dir File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
+begin
+  require 'coveralls'
+  Coveralls.wear!
+end
+
+begin
+  require 'simplecov'
+  if ENV['CIRCLE_ARTIFACTS']
+    SimpleCov.coverage_dir File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
+  else
+    SimpleCov.coverage_dir '.coverage'
+  end
   require 'simplecov-badge'
   SimpleCov::Formatter::BadgeFormatter.badge_title = 'coverage'
-  SimpleCov.formatter = SimpleCov::Formatter::BadgeFormatter
-end
-
-if ENV['LOCAL']
-  require "simplecov"
-  SimpleCov.coverage_dir '.coverage'
-end
-pwd = Dir.pwd
-
-if defined? SimpleCov
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::BadgeFormatter,
+  ]
   SimpleCov.start do
     add_filter "/test"
     add_filter "/vendor"

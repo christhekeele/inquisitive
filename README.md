@@ -6,18 +6,21 @@ Inquisitive
 Status
 ------
 
+[build-status]: https://circleci.com/gh/christhekeele/inquisitive/
+[coverage]:     https://coveralls.io/repos/christhekeele/inquisitive
+
 [master]:          https://github.com/christhekeele/inquisitive/tree/master
 [master-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
-[master-coverage]: https://circle-artifacts.com/gh/christhekeele/inquisitive/14/artifacts/0/tmp/circle-artifacts.scyKtTx/coverage/coverage-badge.png
+[master-coverage]: https://coveralls.io/r/christhekeele/inquisitive/badge.png
 
 [development]:          https://github.com/christhekeele/inquisitive/tree/development
 [development-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
-[development-coverage]: https://circle-artifacts.com/gh/christhekeele/inquisitive/13/artifacts/0/tmp/circle-artifacts.scyKtTx/coverage/coverage-badge.png
+[development-coverage]: https://coveralls.io/r/christhekeele/inquisitive/badge.png
 
-| :thumbsup: |         [Master][master]          |      [Development][development]        |
-|:----------:|:---------------------------------:|:--------------------------------------:|
-| Build      | ![Build Status][master-status]    | ![Build Status][development-status]    |
-| Coverage   | ![Code Coverage][master-coverage] | ![Code Coverage][development-coverage] |
+|          :thumbsup:        | [Continuous Integration][build-status] |         [Code Coverage][coverage]        |
+|:--------------------------:|:--------------------------------------:|:----------------------------------------:|
+| [Master][master]           | ![Build Status][master-status]         | ![Coverage Status][master-coverage]      |
+| [Development][development] | ![Build Status][development-status]    | ![Coverage Status][development-coverage] |
 
 Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's `StringInquirer`.
 

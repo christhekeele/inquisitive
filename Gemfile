@@ -13,3 +13,7 @@ gem 'simplecov', '>= 0.7.0',
 gem 'simplecov-badge',
   require: false,
   group: :test
+  
+gem 'coveralls',
+  require: false,
+  group: :test
