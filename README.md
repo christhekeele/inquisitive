@@ -11,11 +11,11 @@ Status
 
 [master]:          https://github.com/christhekeele/inquisitive/tree/master
 [master-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
-[master-coverage]: https://coveralls.io/r/christhekeele/inquisitive/badge.png
+[master-coverage]: https://coveralls.io/repos/christhekeele/inquisitive/badge.png?branch=master
 
 [development]:          https://github.com/christhekeele/inquisitive/tree/development
 [development-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
-[development-coverage]: https://coveralls.io/r/christhekeele/inquisitive/badge.png
+[development-coverage]: https://coveralls.io/repos/christhekeele/inquisitive/badge.png?branch=development
 
 |          :thumbsup:        | [Continuous Integration][build-status] |         [Code Coverage][coverage]        |
 |:--------------------------:|:--------------------------------------:|:----------------------------------------:|
