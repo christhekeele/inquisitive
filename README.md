@@ -238,12 +238,12 @@ The `present_if` check uses `===` under the covers for maximum expressiveness, s
 
 #### Inquiry mode
 
-Environment inquirers have three configurable modes, defaulting to `:dynamic`:
+Environment inquirers have three configurable modes, defaulting to `:static`.
 
 ```ruby
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'STUB_', mode: %i[dynamic cached static].sample
+  inquires_about 'STUB', mode: %i[dynamic lazy static].sample
 end
 ```
 
@@ -253,7 +253,7 @@ end
 
     Use if you're manipulating the environment in between invocations, so `Inquisitive` can pick up on new values, detect changes between string or array notation, and discover new keys for hash notation.
 
-- **Cached**
+- **Lazy**
 
     Environment inquiries check `ENV` on their first invocation, and re-use the response in future invocations.
 

@@ -49,6 +49,20 @@ Releases
 
   Nested hashes (through multiple `__`'s) are not yet supported.
 
+- `Inquisitive::Environment`:  **default modes**
+
+  Previously the default mode was `:dynamic`. This was mostly to prevent unexpected behaviour for newcomers.
+  
+  Now `:static` is the default. This is because `Inquisitive::Environment` is meant to be loaded immediately after a boot script that prepares your environment variables, and queried often later. `:static` optimizes to this usecase.
+  
+  To reproduce the old behaviour, you must explicitly pass `mode: :dynamic` each to `inquires_about` invocation. Alternatively, `mode: :lazy` might be a viable way to get the benefits of `:static` without refactoring your boot process.
+  
+### Non-breaking
+
+- `Inquisitive::Environment`: **cached mode now lazy mode**
+
+  The `:cached` environment mode is now known as `:lazy`. This is backwards compatible because all logic handling modes explicitly checks for `:static` or `:dynamic`, so any other named mode has the same behaviour as `:lazy`.
+
 1.2.0 - [2013.11.21][1.2.0]
 ---------------------------
 

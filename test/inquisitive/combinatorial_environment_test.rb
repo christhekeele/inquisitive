@@ -30,7 +30,7 @@ class InquisitiveCombinatorialEnvironmentTest < EnvironmentTest
 
 end
 
-%w[dynamic cached static].each do |mode|
+%w[dynamic lazy static].each do |mode|
   %w[string array hash].each do |type|
 
     Inquisitive.const_set(

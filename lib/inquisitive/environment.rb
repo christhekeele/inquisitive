@@ -8,7 +8,7 @@ module Inquisitive
       @__env_accessors__ ||= HashWithIndifferentAccess.new
       @__env_accessors__[env_accessor] = env_var
 
-      mode = Inquisitive[ opts.fetch(:mode, :dynamic).to_s ]
+      mode = Inquisitive[ opts.fetch(:mode, :static).to_s ]
 
       if mode.dynamic?
 
