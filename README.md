@@ -3,8 +3,21 @@ Inquisitive
 
 > **Predicate methods for those curious about their datastructures.**
 
-[Master: ![Build Status](https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57)](https://circleci.com/gh/christhekeele/inquisitive/tree/master)
-[Development: ![Build Status](https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57)](https://circleci.com/gh/christhekeele/inquisitive/tree/development)
+Status
+------
+
+[master]:          https://github.com/christhekeele/inquisitive/tree/master
+[master-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
+[master-coverage]: https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
+
+[development]:          https://github.com/christhekeele/inquisitive/tree/development
+[development-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
+[development-coverage]: https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
+
+| :thumbsup: |         [Master][master]          |      [Development][development]        |
+|:----------:|:---------------------------------:|:--------------------------------------:|
+| Build      | ![Build Status][master-status]    | ![Build Status][development-status]    |
+| Coverage   | ![Code Coverage][master-coverage] | ![Code Coverage][development-coverage] |
 
 Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's `StringInquirer`.
 

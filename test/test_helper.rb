@@ -4,6 +4,7 @@ if ENV['CIRCLE_ARTIFACTS']
   require "simplecov"
   SimpleCov.coverage_dir File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
   require 'simplecov-badge'
+  SimpleCov::Formatter::BadgeFormatter.badge_title = 'coverage'
   SimpleCov.formatter = SimpleCov::Formatter::BadgeFormatter
 end
 
