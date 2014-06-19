@@ -8,11 +8,11 @@ Status
 
 [master]:          https://github.com/christhekeele/inquisitive/tree/master
 [master-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
-[master-coverage]: https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
+[master-coverage]: https://circle-artifacts.com/gh/christhekeele/inquisitive/14/artifacts/0/tmp/circle-artifacts.scyKtTx/coverage/coverage-badge.png
 
 [development]:          https://github.com/christhekeele/inquisitive/tree/development
 [development-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
-[development-coverage]: https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
+[development-coverage]: https://circle-artifacts.com/gh/christhekeele/inquisitive/13/artifacts/0/tmp/circle-artifacts.scyKtTx/coverage/coverage-badge.png
 
 | :thumbsup: |         [Master][master]          |      [Development][development]        |
 |:----------:|:---------------------------------:|:--------------------------------------:|
