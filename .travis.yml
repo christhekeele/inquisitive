@@ -8,12 +8,12 @@ rvm:
   - rbx-2
   - jruby
   
-gemfiles:
+gemfile:
   - Gemfile
   - Gemfile.ActiveSupport
 
 env:
-  - "activesupport="
+  - ""
   - "activesupport=3.2.18"
   - "activesupport=4.1.1"
   - "activesupport=master"
@@ -24,6 +24,15 @@ matrix:
     - rvm: rbx-2
     - rvm: jruby
     - rvm: ruby-head
+  exclude:
+    - gemfile: Gemfile.ActiveSupport
+      env: ""
+    - gemfile: Gemfile
+      env: "activesupport=3.2.18"
+    - gemfile: Gemfile
+      env: "activesupport=4.1.1"
+    - gemfile: Gemfile
+      env: "activesupport=master"
     
 branches:
   except:
