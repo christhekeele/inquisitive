@@ -8,7 +8,7 @@ module Inquisitive
       @__env_accessors__ ||= HashWithIndifferentAccess.new
       @__env_accessors__[env_accessor] = env_var
 
-      mode = Inquisitive[ opts.fetch(:mode, :dynamic).to_s ]
+      mode = Inquisitive[ opts.fetch(:mode, :static).to_s ]
 
       if mode.dynamic?
 
@@ -45,23 +45,25 @@ module Inquisitive
       end
     end
 
+  private
+
     module Parser
       class << self
 
         def [](var_name)
           if ENV.has_key? var_name
+            
             env_var = ENV[var_name]
-
             if env_var.include? ','
               env_var.split(',').map(&:strip)
             else
               env_var
             end
 
-          elsif hash_var? var_name
+          elsif env_vars = can_find_env_keys_from(var_name)
 
-            Parser.env_keys_from(var_name).reduce({}) do |hash, key|
-              hash[Parser.key_for(key, var_name)] = Inquisitive[Parser[key]]
+            env_vars.reduce({}) do |hash, key|
+              hash[key_for(key, var_name)] = Inquisitive[Parser[key]]
               hash
             end
 
@@ -69,19 +71,20 @@ module Inquisitive
             ""
           end
         end
-
-        def hash_var?(var_name)
-          var_name[-1] == '_'
+        
+        def can_find_env_keys_from(var_name)
+          found = env_keys_from(var_name)
+          found.empty? ? nil : found
         end
 
         def env_keys_from(var_name)
           ENV.keys.select do |key|
-            key =~ /^#{var_name}/
+            key =~ /^#{var_name}__/
           end
         end
 
         def key_for(env_key, var_name)
-          env_key.gsub("#{var_name}", '').downcase
+          env_key.gsub("#{var_name}__", '').downcase
         end
 
       end

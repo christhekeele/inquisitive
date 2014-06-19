@@ -4,18 +4,18 @@ class InquisitiveCombinatorialEnvironmentTest < EnvironmentTest
     super
     ENV['STRING'] = @raw_string
     ENV['ARRAY'] = @raw_array.join(',')
-    ENV['HASH_AUTHENTICATION'] = @raw_hash[:authentication].to_s
-    ENV['HASH_IN'] = @raw_hash[:in]
-    ENV['HASH_DATABASES'] = @raw_hash[:databases].join(',')
+    ENV['HASH__AUTHENTICATION'] = @raw_hash[:authentication].to_s
+    ENV['HASH__IN'] = @raw_hash[:in]
+    ENV['HASH__DATABASES'] = @raw_hash[:databases].join(',')
   end
   def teardown
     super
     ENV.delete 'STRING'
     ENV.delete 'ARRAY'
-    ENV.delete 'HASH_AUTHENTICATION'
-    ENV.delete 'HASH_IN'
-    ENV.delete 'HASH_DATABASES'
-    ENV.delete 'HASH_SOMETHING_NEW'
+    ENV.delete 'HASH__AUTHENTICATION'
+    ENV.delete 'HASH__IN'
+    ENV.delete 'HASH__DATABASES'
+    ENV.delete 'HASH__SOMETHING_NEW'
   end
 
   def change_string_variable
@@ -25,12 +25,12 @@ class InquisitiveCombinatorialEnvironmentTest < EnvironmentTest
     ENV['ARRAY'] = [ ENV['ARRAY'], 'something_new' ].join ','
   end
   def change_hash_variable
-    ENV['HASH_SOMETHING_NEW'] = 'true'
+    ENV['HASH__SOMETHING_NEW'] = 'true'
   end
 
 end
 
-%w[dynamic cached static].each do |mode|
+%w[dynamic lazy static].each do |mode|
   %w[string array hash].each do |type|
 
     Inquisitive.const_set(
@@ -45,7 +45,7 @@ end
           super
           @mode = Inquisitive[self.class.mode]
           @type = Inquisitive[self.class.type]
-          App.inquires_about @type.upcase + (@type == "hash" ? "_" : ""), mode: @mode
+          App.inquires_about @type.upcase, mode: @mode
         end
 
         def string

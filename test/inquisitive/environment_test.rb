@@ -4,19 +4,10 @@ class InquisitiveEnvironmentTest < EnvironmentTest
 
   def test_missing_variable_responses
     App.inquires_about 'DOES_NOT_EXIST', with: :exists
-    assert_equal App.exists, ""
+    assert_equal "", App.exists
   end
   def test_missing_variable_predicates
     App.inquires_about 'DOES_NOT_EXIST', with: :exists
-    refute App.exists?
-  end
-
-  def test_missing_hash_variable_responses
-    App.inquires_about 'DOES_NOT_EXIST_', with: :exists
-    assert_equal App.exists, {}
-  end
-  def test_missing_hash_variable_predicates
-    App.inquires_about 'DOES_NOT_EXIST_', with: :exists
     refute App.exists?
   end
 
@@ -25,11 +16,13 @@ class InquisitiveEnvironmentTest < EnvironmentTest
     assert App.respond_to? :name_not_specified
   end
 
-  def test_default_mode_of_dynamic
-    App.inquires_about 'DEFAULTS_TO', with: :defaults_to
-    App.defaults_to # Call once to ensure no caching
+  def test_default_mode_of_static
+    ENV['DEFAULTS_TO'] = 'static'
+    App.inquires_about 'DEFAULTS_TO'
+    ENV['DEFAULTS_TO'] = 'lazy'
+    assert App.defaults_to.static?
     ENV['DEFAULTS_TO'] = 'dynamic'
-    assert App.defaults_to.dynamic?
+    assert App.defaults_to.static?
   end
 
   def test_custom_string_presence
