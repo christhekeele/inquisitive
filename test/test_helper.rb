@@ -1,8 +1,10 @@
 require "rubygems"
 
 begin
-  require 'coveralls'
-  Coveralls.wear!
+  if ENV['COVERALLS_REPO_TOKEN']
+    require 'coveralls'
+    Coveralls.wear!
+  end
 end
 
 begin
@@ -12,12 +14,6 @@ begin
   else
     SimpleCov.coverage_dir '.coverage'
   end
-  require 'simplecov-badge'
-  SimpleCov::Formatter::BadgeFormatter.badge_title = 'coverage'
-  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::BadgeFormatter,
-  ]
   SimpleCov.start do
     add_filter "/test"
     add_filter "/vendor"

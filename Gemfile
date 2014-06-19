@@ -9,10 +9,6 @@ gem 'pry',
 gem 'simplecov', '>= 0.7.0',
   require: false,
   group: :test
-
-gem 'simplecov-badge',
-  require: false,
-  group: :test
   
 gem 'coveralls',
   require: false,
