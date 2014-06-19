@@ -12,10 +12,12 @@ if ENV['LOCAL']
   require "simplecov"
   SimpleCov.coverage_dir '.coverage'
 end
+pwd = Dir.pwd
 
 if defined? SimpleCov
   SimpleCov.start do
     add_filter "/test"
+    add_filter "/vendor"
   end
 end
 
