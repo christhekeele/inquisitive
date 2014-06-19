@@ -6,15 +6,15 @@ Inquisitive
 Status
 ------
 
-[version]: https://badge.fury.io/rb/inquisitive.svg
+[version]: https://badge.fury.io/rb/inquisitive@2x.svg
 
 [master]:          https://github.com/christhekeele/inquisitive/tree/master
-[master-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/master.svg
-[master-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/master.svg
+[master-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/master@2x.svg
+[master-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/master@2x.svg
 
 [development]:          https://github.com/christhekeele/inquisitive/tree/development
-[development-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/development.svg
-[development-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/development.svg
+[development-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/development@2x.svg
+[development-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/development@2x.svg
 
 |    ![Version][version]     |          Continuous Integration     |                 Code Coverage            |
 |:--------------------------:|:-----------------------------------:|:----------------------------------------:|
