@@ -1,10 +1,26 @@
 require "rubygems"
-require "simplecov"
-require "minitest/autorun"
 
-SimpleCov.start do
-  add_filter "/test"
+begin
+  require 'simplecov'
+  if ENV['CIRCLE_ARTIFACTS']
+    SimpleCov.coverage_dir File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
+  else
+    SimpleCov.coverage_dir '.coverage'
+  end
+  if ENV['COVERALLS_REPO_TOKEN']
+    require 'coveralls'
+    SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+      SimpleCov::Formatter::HTMLFormatter,
+      Coveralls::SimpleCov::Formatter
+    ]
+  end
+  SimpleCov.start do
+    add_filter "/test"
+    add_filter "/vendor"
+  end
 end
+
+require "minitest/autorun"
 
 class Test < MiniTest::Test
 
