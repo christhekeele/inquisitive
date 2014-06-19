@@ -3,6 +3,9 @@ Inquisitive
 
 > **Predicate methods for those curious about their datastructures.**
 
+[Master: ![Build Status](https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57)](https://circleci.com/gh/christhekeele/inquisitive/tree/master)
+[Development: ![Build Status](https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57)](https://circleci.com/gh/christhekeele/inquisitive/tree/development)
+
 Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's `StringInquirer`.
 
 It also allows you to auto-instanciate and read inquisitive datastructures straight from your `ENV` hash through the `Inquisitive::Environment` module.

@@ -1,9 +1,17 @@
 require "rubygems"
-require "simplecov"
 require "minitest/autorun"
 
-SimpleCov.start do
-  add_filter "/test"
+if ENV['CIRCLE_ARTIFACTS'] || ENV['LOCAL']
+  require "simplecov"
+  coverage_dir = if ENV['CIRCLE_ARTIFACTS']
+    File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
+  else
+    '.coverage'
+  end
+  SimpleCov.coverage_dir coverage_dir
+  SimpleCov.start do
+    add_filter "/test"
+  end
 end
 
 class Test < MiniTest::Test
