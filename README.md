@@ -3,24 +3,6 @@ Inquisitive
 
 > **Predicate methods for those curious about their datastructures.**
 
-Status
-------
-
-[version]: https://badge.fury.io/rb/inquisitive@2x.svg
-
-[master]:          https://github.com/christhekeele/inquisitive/tree/master
-[master-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/master@2x.svg
-[master-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/master@2x.svg
-
-[development]:          https://github.com/christhekeele/inquisitive/tree/development
-[development-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/development@2x.svg
-[development-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/development@2x.svg
-
-|    ![Version][version]     |          Continuous Integration     |                 Code Coverage            |
-|:--------------------------:|:-----------------------------------:|:----------------------------------------:|
-| [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      |
-| [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] |
-
 
 Synopsis
 --------
@@ -30,6 +12,28 @@ Inquisitive provides String, Array, and Hash subclasses with dynamic predicate m
 It also allows you to auto-instanciate and read inquisitive datastructures straight from your `ENV` hash through the `Inquisitive::Environment` module.
 
 Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from ActiveSupport 4.0.
+
+
+Status
+------
+
+[version]: https://badge.fury.io/rb/inquisitive@2x.svg
+
+[master]:          https://github.com/christhekeele/inquisitive/tree/master
+[master-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/master.svg
+[master-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/master.svg
+[master-climate]:  https://img.shields.io/codeclimate/github/christhekeele/inquisitive/flow.svg
+
+[development]:          https://github.com/christhekeele/inquisitive/tree/development
+[development-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/development.svg
+[development-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/development.svg
+[development-climate]:  https://img.shields.io/codeclimate/github/christhekeele/inquisitive/development.svg
+
+|    ![Version][version]     |          Continuous Integration     |                 Test Coverage            |               Code Quality           |
+|:--------------------------:|:-----------------------------------:|:----------------------------------------:|:------------------------------------:|
+| [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      | ![Code Climate][master-climate]      |
+| [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] | ![Code Climate][development-climate] |
+
 
 Installation
 ------------
@@ -46,6 +50,7 @@ Otherwise:
 ```bash
 $ gem install inquisitive
 ```
+
 
 Usage
 -----
@@ -286,6 +291,7 @@ end
     Environment inquiries use the contents of `ENV` at the moment `inquires_about` was invoked.
 
     Use if your application is well-behaved and doesn't go mucking around with the environment at runtime.
+
 
 Contributing
 ------------

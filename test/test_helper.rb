@@ -2,12 +2,8 @@ require "rubygems"
 
 begin
   require 'simplecov'
-  if ENV['CIRCLE_ARTIFACTS']
-    SimpleCov.coverage_dir File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
-  else
-    SimpleCov.coverage_dir '.coverage'
-  end
-  if ENV['COVERALLS_REPO_TOKEN']
+  SimpleCov.coverage_dir '.coverage'
+  if ENV['CI']
     require 'coveralls'
     SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
       SimpleCov::Formatter::HTMLFormatter,
