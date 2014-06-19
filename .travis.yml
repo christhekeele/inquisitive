@@ -28,3 +28,6 @@ matrix:
 branches:
   except:
     - gh-pages
+
+after_success:
+  - coveralls
