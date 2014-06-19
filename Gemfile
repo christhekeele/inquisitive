@@ -6,6 +6,10 @@ gemspec
 gem 'pry',
   group: [:development, :test]
   
-gem 'simplecov',
+gem 'simplecov', '>= 0.7.0',
+  require: false,
+  group: :test
+
+gem 'simplecov-badge',
   require: false,
   group: :test

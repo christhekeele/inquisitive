@@ -1,14 +1,18 @@
 require "rubygems"
 require "minitest/autorun"
 
-if ENV['CIRCLE_ARTIFACTS'] || ENV['LOCAL']
+if ENV['CIRCLE_ARTIFACTS']
   require "simplecov"
-  coverage_dir = if ENV['CIRCLE_ARTIFACTS']
-    File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
-  else
-    '.coverage'
-  end
-  SimpleCov.coverage_dir coverage_dir
+  SimpleCov.coverage_dir File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
+  require 'simplecov-badge'
+  SimpleCov.formatter = SimpleCov::Formatter::BadgeFormatter
+end
+
+if ENV['LOCAL']
+  require "simplecov"
+end
+
+if defined? SimpleCov
   SimpleCov.start do
     add_filter "/test"
   end
