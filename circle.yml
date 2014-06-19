@@ -1,9 +1,0 @@
-general:
-  branches:
-    ignore:
-      - gh-pages # list of branches to ignore
-      - /release\/.*/ # or ignore regexes
-      
-machine:
-  ruby:
-    version: 2.0.0-p481
