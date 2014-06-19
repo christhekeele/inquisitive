@@ -336,7 +336,7 @@ class InquisitiveHashWithIndifferentAccessTest < Test
 
     # Should preserve the default proc.
     mixed_with_default_proc = @mixed.dup
-    mixed_with_default_proc.default_proc = -> (h, k) { '1234' }
+    mixed_with_default_proc.default_proc = lambda { |h, k| '1234' }
     roundtrip = HashWithIndifferentAccess.new(mixed_with_default_proc).to_hash
     assert_equal @strings, roundtrip
     assert_equal '1234', roundtrip.default

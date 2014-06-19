@@ -6,15 +6,17 @@ Inquisitive
 Status
 ------
 
+[version]: https://badge.fury.io/rb/inquisitive@2x.svg
+
 [master]:          https://github.com/christhekeele/inquisitive/tree/master
-[master-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/master.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
-[master-coverage]: https://coveralls.io/repos/christhekeele/inquisitive/badge.png?branch=master
+[master-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/master@2x.svg
+[master-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/master@2x.svg
 
 [development]:          https://github.com/christhekeele/inquisitive/tree/development
-[development-status]:   https://circleci.com/gh/christhekeele/inquisitive/tree/development.png?circle-token=446e82cbd7b2c603075837c01e613c1c9cd99a57
-[development-coverage]: https://coveralls.io/repos/christhekeele/inquisitive/badge.png?branch=development
+[development-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/development@2x.svg
+[development-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/development@2x.svg
 
-|          :thumbsup:        |          Continuous Integration     |                 Code Coverage            |
+|    ![Version][version]     |          Continuous Integration     |                 Code Coverage            |
 |:--------------------------:|:-----------------------------------:|:----------------------------------------:|
 | [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      |
 | [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] |
