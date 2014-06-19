@@ -6,3 +6,7 @@ Rake::TestTask.new do |t|
   t.test_files = Dir['test/**/*_test.rb']
 end
 task default: :test
+
+task :console do
+  `pry -I lib -r inquisitive.rb`
+end

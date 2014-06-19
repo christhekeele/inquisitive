@@ -40,14 +40,6 @@ module Inquisitive
       end
     end
 
-    def steal_default_from(hash)
-      if hash.default_proc
-        self.default_proc = hash.default_proc
-      else
-        self.default = hash.default
-      end
-    end
-
     alias_method :regular_writer, :[]= unless method_defined?(:regular_writer)
     alias_method :regular_update, :update unless method_defined?(:regular_update)
 
@@ -83,6 +75,11 @@ module Inquisitive
 
     def fetch(key, *extras)
       super(convert_key(key), *extras)
+    end
+    
+    # not sure why just this one Enumerable method fails tests without override
+    def reject(*args, &block)
+      self.class[super]
     end
 
     def values_at(*indices)
@@ -154,6 +151,14 @@ module Inquisitive
     end
 
   protected
+
+    def steal_default_from(hash)
+      if hash.default_proc
+        self.default_proc = hash.default_proc
+      else
+        self.default = hash.default
+      end
+    end
 
     def convert_key(key)
       key.kind_of?(Symbol) ? key.to_s : key

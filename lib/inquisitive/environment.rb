@@ -45,13 +45,15 @@ module Inquisitive
       end
     end
 
+  private
+
     module Parser
       class << self
 
         def [](var_name)
           if ENV.has_key? var_name
+            
             env_var = ENV[var_name]
-
             if env_var.include? ','
               env_var.split(',').map(&:strip)
             else

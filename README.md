@@ -1,15 +1,29 @@
 Inquisitive
 ===========
 
-Predicate methods for those curious about their datastructures.
+> **Predicate methods for those curious about their datastructures.**
 
-Inquisitive allows you to interrogate objects about their contents with friendly, readable method chains. It's the logical conclusion of ActiveSupport's `StringInquirer`.
+Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's `StringInquirer`.
 
-This library is extracted from several projects where I found myself building on the `Rails.env.production?` pattern: wrapping information from the `ENV` variable into more descriptive and flexible methods accessible from my main namespace. `Inquisitive::Environment` contains helper methods to further this end.
+It also allows you to auto-instanciate and read inquisitive datastructures straight from your `ENV` hash through the `Inquisitive::Environment` module.
 
-For all intents and purposes Inquisitive has no dependencies, doesn't pollute the global constant namespace with anything but `Inquisitive`, and doesn't touch any core classes. It uses ActiveSupport's `HashWithIndifferentAccess`, but will bootstrap itself with a minimal version extracted from ActiveSupport 4.0 if it cannot be found.
+Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from ActiveSupport 4.0.
 
-It also leans on `method_missing`, `dup`, and wrapper objects, so if your application is too inquisitive you might find it grinding to a halt. It's recommended to only use it to switch on a few core runtime environment variables. Don't serialize ActiveRecord attributes into it, is what I'm saying here.
+Installation
+------------
+
+To add to your project:
+
+```bash
+$ echo "gem 'inquisitive'" >> Gemfile
+$ bundle install
+```
+
+Otherwise:
+
+```bash
+gem install inquisitive
+```
 
 Usage
 -----
@@ -95,7 +109,7 @@ config.no.api?
 
 ### Inquisitive Environment
 
-`Inquisitive::Environment` can be used in your modules and classes to more easily interrogate the `ENV` variable:
+`Inquisitive::Environment` can be used in your modules and classes to more easily interrogate `ENV` variables with inquisitive objects:
 
 #### Strings
 
@@ -220,7 +234,7 @@ MyGame.stub_registration?
 
 This only works on top-level inquirers, so there's no way to get our nested `MyGame.stubbed.authentication?` to behave as expected (currently).
 
-The `present_if` check uses `===` under the covers for maximum expressiveness, so you can also use it to match against regexs and other constructs.
+The `present_if` check uses `===` under the covers for maximum expressiveness, so you can also use it to match against regexs, classes, and other constructs.
 
 #### Inquiry mode
 

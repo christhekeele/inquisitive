@@ -4,7 +4,7 @@ class InquisitiveEnvironmentTest < EnvironmentTest
 
   def test_missing_variable_responses
     App.inquires_about 'DOES_NOT_EXIST', with: :exists
-    assert_equal App.exists, ""
+    assert_equal "", App.exists
   end
   def test_missing_variable_predicates
     App.inquires_about 'DOES_NOT_EXIST', with: :exists
