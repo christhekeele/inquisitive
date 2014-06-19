@@ -148,12 +148,12 @@ MyGame.supported_databases.sql_server?
 #### Hashes
 
 ```ruby
-ENV['STUB_AUTHENTICATION'] = 'true'
-ENV['STUB_IN'] = "development"
-ENV['STUB_SERVICES'] = "database,api"
+ENV['STUB__AUTHENTICATION'] = 'true'
+ENV['STUB__IN'] = "development"
+ENV['STUB__SERVICES'] = "database,api"
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'STUB_'
+  inquires_about 'STUB'
 end
 
 MyGame.stub.authentication?
@@ -194,10 +194,10 @@ MyGame.env.production?
 Environment inquirers can have explicit presence checks, circumventing a common pitfall when reasoning about environment variables. Borrowing from the example above:
 
 ```ruby
-ENV['STUB_AUTHENTICATION'] = 'false'
+ENV['STUB__AUTHENTICATION'] = 'false'
 class MyGame
   extend Inquisitive::Environment
-  inquires_about 'STUB_'
+  inquires_about 'STUB'
 end
 
 MyGame.stub.authentication

@@ -11,15 +11,6 @@ class InquisitiveEnvironmentTest < EnvironmentTest
     refute App.exists?
   end
 
-  def test_missing_hash_variable_responses
-    App.inquires_about 'DOES_NOT_EXIST_', with: :exists
-    assert_equal App.exists, {}
-  end
-  def test_missing_hash_variable_predicates
-    App.inquires_about 'DOES_NOT_EXIST_', with: :exists
-    refute App.exists?
-  end
-
   def test_autonaming_of_inquirers
     App.inquires_about 'NAME_NOT_SPECIFIED'
     assert App.respond_to? :name_not_specified

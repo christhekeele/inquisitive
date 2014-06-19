@@ -60,10 +60,10 @@ module Inquisitive
               env_var
             end
 
-          elsif hash_var? var_name
+          elsif env_vars = can_find_env_keys_from(var_name)
 
-            Parser.env_keys_from(var_name).reduce({}) do |hash, key|
-              hash[Parser.key_for(key, var_name)] = Inquisitive[Parser[key]]
+            env_vars.reduce({}) do |hash, key|
+              hash[key_for(key, var_name)] = Inquisitive[Parser[key]]
               hash
             end
 
@@ -71,19 +71,20 @@ module Inquisitive
             ""
           end
         end
-
-        def hash_var?(var_name)
-          var_name[-1] == '_'
+        
+        def can_find_env_keys_from(var_name)
+          found = env_keys_from(var_name)
+          found.empty? ? nil : found
         end
 
         def env_keys_from(var_name)
           ENV.keys.select do |key|
-            key =~ /^#{var_name}/
+            key =~ /^#{var_name}__/
           end
         end
 
         def key_for(env_key, var_name)
-          env_key.gsub("#{var_name}", '').downcase
+          env_key.gsub("#{var_name}__", '').downcase
         end
 
       end
