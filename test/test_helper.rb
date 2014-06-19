@@ -1,5 +1,4 @@
 require "rubygems"
-require "minitest/autorun"
 
 if ENV['CIRCLE_ARTIFACTS']
   require "simplecov"
@@ -10,6 +9,7 @@ end
 
 if ENV['LOCAL']
   require "simplecov"
+  SimpleCov.coverage_dir '.coverage'
 end
 
 if defined? SimpleCov
@@ -17,6 +17,8 @@ if defined? SimpleCov
     add_filter "/test"
   end
 end
+
+require "minitest/autorun"
 
 class Test < MiniTest::Test
 
