@@ -17,22 +17,31 @@ Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if 
 Status
 ------
 
-[version]: https://badge.fury.io/rb/inquisitive@2x.svg
+[status]: https://travis-ci.org/christhekeele/inquisitive
+
+[version]:       https://rubygems.org/gems/inquisitive/versions
+[version-image]: https://badge.fury.io/rb/inquisitive@2x.svg
+
+[quality]:       https://codeclimate.com/github/christhekeele/inquisitive
+[quality-image]: https://img.shields.io/codeclimate/github/christhekeele/inquisitive.svg
+
+[dependencies]:       https://gemnasium.com/christhekeele/inquisitive
+[dependencies-image]: http://img.shields.io/gemnasium/christhekeele/inquisitive.svg
 
 [master]:          https://github.com/christhekeele/inquisitive/tree/master
-[master-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/master.svg
+[master-status]:   https://img.shields.io/travis/christhekeele/inquisitive/master.svg
 [master-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/master.svg
-[master-climate]:  https://img.shields.io/codeclimate/github/christhekeele/inquisitive/flow.svg
 
 [development]:          https://github.com/christhekeele/inquisitive/tree/development
-[development-status]:   https://img.shields.io/travis/christhekeele/inquisitive/tree/development.svg
+[development-status]:   https://img.shields.io/travis/christhekeele/inquisitive/development.svg
 [development-coverage]: https://img.shields.io/coveralls/christhekeele/inquisitive/development.svg
-[development-climate]:  https://img.shields.io/codeclimate/github/christhekeele/inquisitive/development.svg
 
-|    ![Version][version]     |          Continuous Integration     |                 Test Coverage            |               Code Quality           |
-|:--------------------------:|:-----------------------------------:|:----------------------------------------:|:------------------------------------:|
-| [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      | ![Code Climate][master-climate]      |
-| [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] | ![Code Climate][development-climate] |
+[![Version][version-image]][version] [![Quality][quality-image]][quality] [![Dependencies][dependencies-image]][dependencies]
+
+|          :thumbsup:        |   [Continuous Integration][status]  |                 Test Coverage            |
+|:--------------------------:|:-----------------------------------:|:----------------------------------------:|
+| [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      |
+| [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] |
 
 
 Installation
