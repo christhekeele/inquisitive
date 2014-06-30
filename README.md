@@ -11,13 +11,9 @@ Inquisitive provides String, Array, and Hash subclasses with dynamic predicate m
 
 It also allows you to auto-instanciate and read inquisitive datastructures straight from your `ENV` hash through the `Inquisitive::Environment` module.
 
-Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from ActiveSupport 4.0.
-
 
 Status
 ------
-
-[status]: https://travis-ci.org/christhekeele/inquisitive
 
 [version]:       https://rubygems.org/gems/inquisitive/versions
 [version-image]: https://badge.fury.io/rb/inquisitive@2x.svg
@@ -27,6 +23,9 @@ Status
 
 [dependencies]:       https://gemnasium.com/christhekeele/inquisitive
 [dependencies-image]: http://img.shields.io/gemnasium/christhekeele/inquisitive.svg
+
+[status]:   https://travis-ci.org/christhekeele/inquisitive
+<!-- [coverage]:  -->
 
 [master]:          https://github.com/christhekeele/inquisitive/tree/master
 [master-status]:   https://img.shields.io/travis/christhekeele/inquisitive/master.svg
@@ -302,11 +301,22 @@ end
     Use if your application is well-behaved and doesn't go mucking around with the environment at runtime.
 
 
+Compatibility
+-------------
+
+Inquisitive doesn't monkey-patch any core libraries or have any external dependencies.
+
+It runs on ruby 1.9, 2.0, and 2.1 in MRI, JRuby, and Rubinius. It may work in other environments but it is not tested on them.
+
+Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if that cannot be loaded it will bootstrap itself with a minimal, well-tested version extracted from ActiveSupport 4.0 that also doesn't monkey-patch any core libraries.
+
+
 Contributing
 ------------
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
+3. Commit your changes and tests (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+5. Create new Pull Request on GitHub
+6. Watch it for build status and discussion

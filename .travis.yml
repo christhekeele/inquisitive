@@ -11,13 +11,13 @@ rvm:
 gemfile:
   - Gemfile
   - Gemfile.ActiveSupport
-
+  
 env:
-  - ""
-  - "activesupport=3.2.18"
-  - "activesupport=4.1.1"
-  - "activesupport=master"
-
+  - ''
+  - activesupport=3.2.18
+  - activesupport=4.1.1
+  - activesupport=master
+  
 matrix:
   fast_finish: true
   allow_failures:
@@ -26,17 +26,24 @@ matrix:
     - rvm: ruby-head
   exclude:
     - gemfile: Gemfile.ActiveSupport
-      env: ""
+      env: ''
     - gemfile: Gemfile
-      env: "activesupport=3.2.18"
+      env: activesupport=3.2.18
     - gemfile: Gemfile
-      env: "activesupport=4.1.1"
+      env: activesupport=4.1.1
     - gemfile: Gemfile
-      env: "activesupport=master"
-    
+      env: activesupport=master
+      
 branches:
   except:
     - gh-pages
-
+    
 after_success:
   - coveralls
+  
+deploy:
+  provider: rubygems
+  api_key:
+    secure: KjncTxhljBTFpb6jy7aUPqjGXkqk/BNU1J3I//sBet1KZw9ir10EHy+txHKZoXIpH6C7iDS2uORN/6LzoCQL5KWf9pr6mmA40q96CIfLFutOcvuXpLeUmEpzaTqZxj+GZtM50/amI4iHe2JV3k+1outWDJ7+Wf14zBiYQnoAAAI=
+  on:
+    all_branches: true

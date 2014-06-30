@@ -5,6 +5,9 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = "inquisitive"
   spec.version       = "2.0.0"
+  if ENV['TRAVIS_BRANCH'] == 'development'
+    spec.version     = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}"
+  end
   spec.authors       = ["Chris Keele"]
   spec.email         = ["dev@chriskeele.com"]
   spec.summary       = "Predicate methods for those curious about their datastructures."
@@ -18,7 +21,7 @@ Gem::Specification.new do |spec|
     Also allows you to auto-instanciate and read inquisitive datastructures straight
     from your `ENV` hash.
   DESC
-  spec.homepage      = "https://github.com/rawsugar/inquisitive"
+  spec.homepage      = "https://christhekeele.github.com/inquisitive"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
