@@ -272,6 +272,43 @@ This only works on top-level inquirers, so there's no way to get our nested `MyG
 
 The `present_if` check uses `===` under the covers for maximum expressiveness, so you can also use it to match against regexs, classes, and other constructs.
 
+##### Truthy Booleans
+
+`Inquisitive::Environment.truthy` contains a regex useful for reading booleans from environment variables.
+
+```ruby
+ENV['NO'] = 'no'
+ENV['YES'] = 'yes'
+ENV['TRUTHY'] = 'TrUe'
+ENV['FALSEY'] = 'FaLsE'
+ENV['BOOLEAN'] = '1'
+ENV['BOOLENOPE'] = '0'
+class MyCli
+  extend Inquisitive::Environment
+  inquires_about 'NO', present_if: truthy
+  inquires_about 'YES', present_if: truthy
+  inquires_about 'TRUTHY', present_if: truthy
+  inquires_about 'FALSEY', present_if: truthy
+  inquires_about 'BOOLEAN', present_if: truthy
+  inquires_about 'BOOLENOPE', present_if: truthy
+end
+
+MyGame.no?
+#=> false
+MyGame.yes?
+#=> true
+
+MyGame.truthy?
+#=> true
+MyGame.falsey?
+#=> false
+
+MyGame.boolean?
+#=> true
+MyGame.boolenope?
+#=> false
+```
+
 #### Inquiry mode
 
 Environment inquirers have three configurable modes, defaulting to `:static`.

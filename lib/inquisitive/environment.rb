@@ -2,6 +2,10 @@ module Inquisitive
   module Environment
     include Inquisitive
 
+    def truthy
+      /true|yes|1/i
+    end
+
     def inquires_about(env_var, opts={})
 
       env_accessor = opts.fetch(:with, env_var.downcase[/(.*?)(?=(?:_$|$))/])
@@ -43,6 +47,7 @@ module Inquisitive
           Inquisitive.present? send(predication(__method__))
         end
       end
+
     end
 
   private
@@ -52,7 +57,7 @@ module Inquisitive
 
         def [](var_name)
           if ENV.has_key? var_name
-            
+
             env_var = ENV[var_name]
             if env_var.include? ','
               env_var.split(',').map(&:strip)
@@ -71,7 +76,7 @@ module Inquisitive
             ""
           end
         end
-        
+
         def can_find_env_keys_from(var_name)
           found = env_keys_from(var_name)
           found.empty? ? nil : found

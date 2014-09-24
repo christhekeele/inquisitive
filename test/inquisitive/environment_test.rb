@@ -43,4 +43,12 @@ class InquisitiveEnvironmentTest < EnvironmentTest
     refute App.authorizable?
   end
 
+  %w[true True TrUe TRUE yes Yes YeS YES 1].each do |truthy_var|
+    define_method :"test_truthy_var_#{truthy_var}" do
+      ENV['TRUTHY'] = truthy_var
+      App.inquires_about 'TRUTHY', present_if: App.truthy
+      assert App.truthy?
+    end
+  end
+
 end
