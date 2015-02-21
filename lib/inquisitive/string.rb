@@ -7,6 +7,10 @@ module Inquisitive
       self.dup.tap{ |s| s.negated = !s.negated }
     end
 
+    def === other
+      other.class == Class and other == ::String or super
+    end
+
   private
 
     def respond_to_missing?(method_name, include_private = false)

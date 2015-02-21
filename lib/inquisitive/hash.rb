@@ -11,6 +11,10 @@ module Inquisitive
       super(Inquisitive[value], options)
     end
 
+    def === other
+      other.class == Class and other == ::Hash or super
+    end
+
   private
 
     def dup
@@ -27,10 +31,8 @@ module Inquisitive
         else
           false
         end ^ negated
-      elsif has_key? method_name
-        self[method_name]
       else
-        super
+        Inquisitive[self[method_name]]
       end
     end
 

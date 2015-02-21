@@ -1,4 +1,5 @@
-require "rubygems"
+require 'rubygems'
+require 'pry'
 
 begin
   require 'simplecov'
@@ -16,7 +17,7 @@ begin
   end
 end
 
-require "minitest/autorun"
+require 'minitest/autorun'
 
 class Test < MiniTest::Test
 
@@ -46,12 +47,15 @@ class Test < MiniTest::Test
   end
 
   def setup
+    @raw_nil_object = nil
     @raw_string = 'production'
     @raw_array  = %w[mysql postgres sqlite]
     @raw_hash   = {
+      nothing: @raw_nil_object,
       authentication: true,
       in: @raw_string,
-      databases: @raw_array
+      databases: @raw_array,
+      nested: {key: 'value', array: %w[foo bar]}
     }
   end
 
@@ -71,9 +75,10 @@ class EnvironmentTest < Test
 
 end
 
-require "shared/string_tests"
-require "shared/array_tests"
-require "shared/hash_tests"
-require "shared/combinatorial_environment_tests"
+require 'shared/nil_object_tests'
+require 'shared/string_tests'
+require 'shared/array_tests'
+require 'shared/hash_tests'
+require 'shared/combinatorial_environment_tests'
 
-require "inquisitive"
+require 'inquisitive'

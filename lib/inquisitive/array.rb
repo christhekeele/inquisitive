@@ -1,10 +1,14 @@
 module Inquisitive
   class Array < ::Array
     include Inquisitive
-    attr_accessor :negated, :array
 
+    attr_accessor :negated
     def exclude
       self.dup.tap{ |a| a.negated = !a.negated }
+    end
+
+    def === other
+      other.class == Class and other == ::Array or super
     end
 
   private
