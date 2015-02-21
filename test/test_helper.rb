@@ -3,7 +3,7 @@ require 'pry'
 
 begin
   require 'simplecov'
-  SimpleCov.coverage_dir '.coverage'
+  SimpleCov.coverage_dir 'coverage'
   if ENV['CI']
     require 'coveralls'
     SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
@@ -13,7 +13,6 @@ begin
   end
   SimpleCov.start do
     add_filter "/test"
-    add_filter "/vendor"
   end
 end
 
