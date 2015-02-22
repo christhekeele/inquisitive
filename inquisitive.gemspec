@@ -18,11 +18,10 @@ Gem::Specification.new do |spec|
     Also allows you to auto-instanciate and read inquisitive datastructures straight
     from your `ENV` hash.
   DESC
-  spec.homepage      = "https://github.com/christhekeele/inquisitive"
+  spec.homepage      = "http://christhekeele.github.io/inquisitive"
   spec.license       = "MIT"
-
-  spec.files         = `git ls-files`.split($/)
-  spec.test_files    = spec.files.grep(%r{^(test)/})
+  spec.files         = `git ls-files lib README.md LICENSE.md`.split($/)
+  spec.test_files    = `git ls-files test inquisitive.gemspec Gemfile Gemfile.lock Gemfile.ActiveSupport Rakefile .travis.yml .coveralls.yml`.split($/)
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler",   ">= 1.3"
