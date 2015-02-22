@@ -4,10 +4,11 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1
+  - 2.2
   - ruby-head
   - rbx-2
   - jruby
-  
+
 gemfile:
   - Gemfile
   - Gemfile.ActiveSupport
@@ -20,10 +21,6 @@ env:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - rvm: rbx-2
-    - rvm: jruby
-    - rvm: ruby-head
   exclude:
     - gemfile: Gemfile.ActiveSupport
       env: ""
@@ -33,7 +30,7 @@ matrix:
       env: "activesupport=4.1.1"
     - gemfile: Gemfile
       env: "activesupport=master"
-    
+
 branches:
   except:
     - gh-pages

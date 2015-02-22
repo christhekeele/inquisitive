@@ -19,9 +19,6 @@ class InquisitiveTest < Test
 ####
 # CONVERSION
 ##
-  def test_converted_nil_equality
-    assert_equal Inquisitive[nil], nil
-  end
   def test_converted_false_equality
     assert_equal Inquisitive[false], false
   end
@@ -41,22 +38,45 @@ class InquisitiveTest < Test
     assert_equal Inquisitive[@object], @object
   end
 
+  def test_converted_nil_object_ancestry
+    assert_kind_of NilClass, Inquisitive[nil]
+    assert Inquisitive[nil] === NilClass
+  end
+  def test_converted_nil_object_instanciation
+    assert_kind_of Inquisitive::NilClass, Inquisitive[nil]
+  end
+  def test_converted_nil_object_equality
+    assert_equal Inquisitive[nil], @raw_nil_object
+  end
+
+  def test_converted_string_ancestry
+    assert_kind_of String, Inquisitive[@raw_string]
+    assert Inquisitive[@raw_string] === String
+  end
   def test_converted_string_instanciation
-    assert_instance_of Inquisitive::String, Inquisitive[@raw_string]
+    assert_kind_of Inquisitive::String, Inquisitive[@raw_string]
   end
   def test_converted_string_equality
     assert_equal Inquisitive[@raw_string], @raw_string
   end
 
+  def test_converted_array_ancestry
+    assert_kind_of Array, Inquisitive[@raw_array]
+    assert Inquisitive[@raw_array] === Array
+  end
   def test_converted_array_instanciation
-    assert_instance_of Inquisitive::Array, Inquisitive[@raw_array]
+    assert_kind_of Inquisitive::Array, Inquisitive[@raw_array]
   end
   def test_converted_array_equality
     assert_equal Inquisitive[@raw_array], @raw_array
   end
 
+  def test_converted_hash_ancestry
+    assert_kind_of Hash, Inquisitive[@raw_hash]
+    assert Inquisitive[@raw_hash] === Hash
+  end
   def test_converted_hash_instanciation
-    assert_instance_of Inquisitive::Hash, Inquisitive[@raw_hash]
+    assert_kind_of Inquisitive::Hash, Inquisitive[@raw_hash]
   end
   def test_converted_hash_equality
     assert_equal Inquisitive[@raw_hash], HashWithIndifferentAccess.new(@raw_hash)

@@ -10,16 +10,18 @@ module Inquisitive
 
     def present?(object)
       case object
-      when ::String
+      when ::String, String
         not object.empty?
-      when ::Array
+      when ::Array, Array
         object.any? do |value|
           Inquisitive.present? value
         end
-      when ::Hash
+      when ::Hash, Hash
         object.values.any? do |value|
           Inquisitive.present? value
         end
+      when ::NilClass, NilClass
+        false
       else
         !!object
       end
@@ -39,6 +41,7 @@ private
 
 end
 
+require "inquisitive/nil_class"
 require "inquisitive/string"
 require "inquisitive/array"
 unless Object.const_defined? :HashWithIndifferentAccess

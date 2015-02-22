@@ -4,6 +4,7 @@ Inquisitive
 > **Predicate methods for those curious about their datastructures.**
 
 
+
 Synopsis
 --------
 
@@ -14,10 +15,12 @@ It also allows you to auto-instanciate and read inquisitive datastructures strai
 Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from ActiveSupport 4.0.
 
 
+
 Status
 ------
 
-[status]: https://travis-ci.org/christhekeele/inquisitive
+[status]:   https://travis-ci.org/christhekeele/inquisitive
+[coverage]: https://rawgit.com/christhekeele/inquisitive/master/coverage/index.html
 
 [version]:       https://rubygems.org/gems/inquisitive/versions
 [version-image]: https://badge.fury.io/rb/inquisitive@2x.svg
@@ -38,10 +41,11 @@ Status
 
 [![Version][version-image]][version] [![Quality][quality-image]][quality] [![Dependencies][dependencies-image]][dependencies]
 
-|          :thumbsup:        |   [Continuous Integration][status]  |                 Test Coverage            |
+|          :thumbsup:        |   [Continuous Integration][status]  |           [Test Coverage][coverage]      |
 |:--------------------------:|:-----------------------------------:|:----------------------------------------:|
 | [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      |
 | [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] |
+
 
 
 Installation
@@ -61,8 +65,10 @@ $ gem install inquisitive
 ```
 
 
+
 Usage
 -----
+
 
 ### String
 
@@ -76,6 +82,7 @@ environment.development?
 environment.not.development?
 #=> false
 ```
+
 
 ### Array
 
@@ -92,6 +99,7 @@ supported_databases.exclude.sql_server?
 #=> true
 ```
 
+
 ### Hash
 
 `Inquisitive::Hash` provides struct-like access to its values, wrapped in other inquisitive objects:
@@ -101,11 +109,13 @@ stubbed = Inquisitive::Hash.new(
   authentication: true,
   in: 'development',
   services: %w[database api],
+  api: {protocol: 'https', subdomains: %w[app web db]},
   ignorable: { junk: [ "" ] }
 )
 #=> {"authentication"=>true,
 #=>  "in"=>"development",
 #=>  "services"=>["database", "api"],
+#=>  "api"=>{"protocol"=>"https", "subdomains"=>["app", "web", "db"]},
 #=>  "ignorable"=>{"junk"=>[""]}}
 
 stubbed.authentication?
@@ -114,6 +124,8 @@ stubbed.registration?
 #=> false
 stubbed.services?
 #=> true
+stubbed.api?
+#=> true
 stubbed.ignorable?
 #=> false
 
@@ -121,10 +133,18 @@ stubbed.in.development?
 #=> true
 stubbed.in.production?
 #=> false
+
 stubbed.services.database?
 #=> true
 stubbed.services.sidekiq?
 #=> false
+
+stubbed.api.protocol?
+#=> true
+stubbed.api.protocol.http?
+#=> false
+stubbed.api.domains.web?
+#=> true
 ```
 
 `Inquisitive::Hash` also allows negation with the `no` method:
@@ -143,6 +163,56 @@ config.no.api?
 #=> true
 ```
 
+Empty keys and nil values become instances of `Inquisitive::NilClass`, which is a black-hole null object that respects the Inquisitive interface, allowing you to inquire on non-existant nested datastructures as if there was one there, negated methods included:
+
+```ruby
+stubbed = Inquisitive::Hash.new
+#=> {}
+
+# We can query it as if we assumed we had:
+#=> {"authentication"=>true,
+#=>  "in"=>"development",
+#=>  "services"=>["database", "api"],
+#=>  "api"=>{"protocol"=>"https", "subdomains"=>["app", "web", "db"]}}
+
+stubbed.authentication?
+#=> false
+stubbed.registration?
+#=> false
+stubbed.services?
+#=> false
+stubbed.api?
+#=> false
+stubbed.ignorable?
+#=> false
+stubbed.no.ignorable?
+#=> true
+
+stubbed.in.development?
+#=> false
+stubbed.in.production?
+#=> false
+stubbed.in.not.production?
+#=> true
+
+stubbed.services.database?
+#=> false
+stubbed.services.sidekiq?
+#=> false
+stubbed.services.exclude.sidekiq?
+#=> true
+
+stubbed.api.protocol?
+#=> false
+stubbed.api.no.protocol?
+#=> true
+stubbed.api.protocol.http?
+#=> false
+stubbed.api.domains.web?
+#=> false
+```
+
+
 ### Inquisitive Environment
 
 `Inquisitive::Environment` can be used in your modules and classes to more easily interrogate `ENV` variables with inquisitive objects:
@@ -151,59 +221,69 @@ config.no.api?
 
 ```ruby
 ENV['ENVIRONMENT'] = "development"
-class MyGame
+class MyApp
   extend Inquisitive::Environment
   inquires_about 'ENVIRONMENT'
 end
 
-MyGame.environment
+MyApp.environment
 #=> "development"
-MyGame.environment.development?
+MyApp.environment.development?
 #=> true
-MyGame.environment.production?
+MyApp.environment.production?
 #=> false
 ```
 
 #### Arrays
 
+Arrays are recognized when environment variables contain commas:
+
 ```ruby
 ENV['SUPPORTED_DATABASES'] = "mysql,postgres,sqlite"
-class MyGame
+class MyApp
   extend Inquisitive::Environment
   inquires_about 'SUPPORTED_DATABASES'
 end
 
-MyGame.supported_databases
+MyApp.supported_databases
 #=> ["mysql", "postgres", "sqlite"]
-MyGame.supported_databases.sqlite?
+MyApp.supported_databases.sqlite?
 #=> true
-MyGame.supported_databases.sql_server?
+MyApp.supported_databases.sql_server?
 #=> false
 ```
 
 #### Hashes
 
+Hashes are recognized when environment variables names contain double underscores:
+
 ```ruby
 ENV['STUB__AUTHENTICATION'] = 'true'
 ENV['STUB__IN'] = "development"
 ENV['STUB__SERVICES'] = "database,api"
-class MyGame
+ENV['STUB__API__PROTOCOL'] = "https"
+ENV['STUB__API__SUBDOMAINS'] = "app,web,db"
+class MyApp
   extend Inquisitive::Environment
   inquires_about 'STUB'
 end
 
-MyGame.stub.authentication?
+MyApp.stub.authentication?
 #=> true
-MyGame.stub.registration?
+MyApp.stub.registration?
 #=> false
-MyGame.stub.in.development?
+MyApp.stub.in.development?
 #=> true
-MyGame.stub.in.production?
+MyApp.stub.in.production?
 #=> false
-MyGame.stub.services.exclude.sidekiq?
+MyApp.stub.services.exclude.sidekiq?
 #=> true
-MyGame.stub.services.sidekiq?
+MyApp.stub.services.sidekiq?
 #=> false
+MyApp.stub.api.protocol.http?
+#=> false
+MyApp.stub.api.subdomains.web?
+#=> true
 ```
 
 #### Naming
@@ -212,100 +292,16 @@ You can name your environment inquirers with `:with`:
 
 ```ruby
 ENV['ENVIRONMENT'] = "development"
-class MyGame
+class MyApp
   extend Inquisitive::Environment
   inquires_about 'ENVIRONMENT', with: :env
 end
 
-MyGame.env
+MyApp.env
 #=> "development"
-MyGame.env.development?
+MyApp.env.development?
 #=> true
-MyGame.env.production?
-#=> false
-```
-
-#### Presence
-
-Environment inquirers can have explicit presence checks, circumventing a common pitfall when reasoning about environment variables. Borrowing from the example above:
-
-```ruby
-ENV['STUB__AUTHENTICATION'] = 'false'
-class MyGame
-  extend Inquisitive::Environment
-  inquires_about 'STUB'
-end
-
-MyGame.stub.authentication
-#=> "false"
-MyGame.stub.authentication?
-#=> true
-MyGame.stub.authentication.true?
-#=> false
-```
-
-It's common to use the presence of environment variables as runtime booleans. This is frequently done by setting the environment variable to the string `"true"` when you want it to be true, and not at all otherwise. As demonstrated, this pattern can lead to ambiguity when the string is other values.
-
-By default such variables will be parsed as an `Inquisitive::String`, so predicate methods will return true whatever their contents, as long as they exist. You can bind the predicate method tighter to an explicit value if you prefer:
-
-```ruby
-ENV['STUB_AUTHENTICATION'] = 'false'
-ENV['STUB_REGISTRATION'] = 'true'
-class MyGame
-  extend Inquisitive::Environment
-  inquires_about 'STUB_AUTHENTICATION', present_if: 'true'
-  inquires_about 'STUB_REGISTRATION', present_if: 'true'
-end
-
-MyGame.stub_authentication
-#=> "false"
-MyGame.stub_authentication?
-#=> false
-
-MyGame.stub_registration
-#=> "true"
-MyGame.stub_registration?
-#=> true
-```
-
-This only works on top-level inquirers, so there's no way to get our nested `MyGame.stubbed.authentication?` to behave as expected (currently).
-
-The `present_if` check uses `===` under the covers for maximum expressiveness, so you can also use it to match against regexs, classes, and other constructs.
-
-##### Truthy Booleans
-
-`Inquisitive::Environment.truthy` contains a regex useful for reading booleans from environment variables.
-
-```ruby
-ENV['NO'] = 'no'
-ENV['YES'] = 'yes'
-ENV['TRUTHY'] = 'TrUe'
-ENV['FALSEY'] = 'FaLsE'
-ENV['BOOLEAN'] = '1'
-ENV['BOOLENOPE'] = '0'
-class MyCli
-  extend Inquisitive::Environment
-  inquires_about 'NO', present_if: truthy
-  inquires_about 'YES', present_if: truthy
-  inquires_about 'TRUTHY', present_if: truthy
-  inquires_about 'FALSEY', present_if: truthy
-  inquires_about 'BOOLEAN', present_if: truthy
-  inquires_about 'BOOLENOPE', present_if: truthy
-end
-
-MyGame.no?
-#=> false
-MyGame.yes?
-#=> true
-
-MyGame.truthy?
-#=> true
-MyGame.falsey?
-#=> false
-
-MyGame.boolean?
-#=> true
-MyGame.boolenope?
+MyApp.env.production?
 #=> false
 ```
 
@@ -314,7 +310,7 @@ MyGame.boolenope?
 Environment inquirers have three configurable modes, defaulting to `:static`.
 
 ```ruby
-class MyGame
+class MyApp
   extend Inquisitive::Environment
   inquires_about 'STUB', mode: %i[dynamic lazy static].sample
 end
@@ -336,7 +332,8 @@ end
 
     Environment inquiries use the contents of `ENV` at the moment `inquires_about` was invoked.
 
-    Use if your application is well-behaved and doesn't go mucking around with the environment at runtime.
+    Use if your application is well-behaved and doesn't go mucking around with the environment at runtim.
+
 
 
 Contributing

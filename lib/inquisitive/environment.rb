@@ -2,10 +2,6 @@ module Inquisitive
   module Environment
     include Inquisitive
 
-    def truthy
-      /true|yes|1/i
-    end
-
     def inquires_about(env_var, opts={})
 
       env_accessor = opts.fetch(:with, env_var.downcase[/(.*?)(?=(?:_$|$))/])
@@ -35,19 +31,6 @@ module Inquisitive
 
       end
 
-      present_if = opts.fetch(:present_if, nil)
-
-      @__env_presence__ ||= HashWithIndifferentAccess.new
-      @__env_presence__["#{env_accessor}?"] = present_if if present_if
-
-      define_singleton_method :"#{env_accessor}?" do
-        if @__env_presence__.has_key? __method__
-          @__env_presence__[__method__] === send(predication(__method__))
-        else
-          Inquisitive.present? send(predication(__method__))
-        end
-      end
-
     end
 
   private
@@ -56,7 +39,7 @@ module Inquisitive
       class << self
 
         def [](var_name)
-          if ENV.has_key? var_name
+          result = if ENV.has_key? var_name
 
             env_var = ENV[var_name]
             if env_var.include? ','
@@ -67,14 +50,15 @@ module Inquisitive
 
           elsif env_vars = can_find_env_keys_from(var_name)
 
-            env_vars.reduce({}) do |hash, key|
-              hash[key_for(key, var_name)] = Inquisitive[Parser[key]]
-              hash
+            Hash[].tap do |hash|
+              env_vars.each do |key|
+                set_hash_value_of hash, key
+              end
             end
 
-          else
-            ""
           end
+
+          replace_empty result
         end
 
         def can_find_env_keys_from(var_name)
@@ -88,8 +72,26 @@ module Inquisitive
           end
         end
 
-        def key_for(env_key, var_name)
-          env_key.gsub("#{var_name}__", '').downcase
+        def set_hash_value_of(hash, var)
+          keypath = var.split('__').map(&:downcase)
+          keypath.shift
+          hash.tap do |hash|
+            keypath.reduce(hash) do |namespace, key|
+              namespace[key] = if key == keypath.last
+                replace_empty Inquisitive[Parser[var]]
+              else
+                if namespace[key].respond_to? :store
+                  namespace[key]
+                else
+                  Hash.new
+                end
+              end
+            end
+          end
+        end
+
+        def replace_empty(value)
+          value == "" or value.nil? ? NilClass.new(nil) : value
         end
 
       end

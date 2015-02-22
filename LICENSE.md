@@ -1,4 +1,4 @@
-Copyright (c) 2013 Chris Keele
+Copyright (c) 2013-2015 Chris Keele
 ------------------------------
 
 MIT License
