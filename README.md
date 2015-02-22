@@ -19,7 +19,8 @@ Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if 
 Status
 ------
 
-[status]: https://travis-ci.org/christhekeele/inquisitive
+[status]:   https://travis-ci.org/christhekeele/inquisitive
+[coverage]: https://rawgit.com/christhekeele/inquisitive/master/coverage/index.html
 
 [version]:       https://rubygems.org/gems/inquisitive/versions
 [version-image]: https://badge.fury.io/rb/inquisitive@2x.svg
@@ -40,7 +41,7 @@ Status
 
 [![Version][version-image]][version] [![Quality][quality-image]][quality] [![Dependencies][dependencies-image]][dependencies]
 
-|          :thumbsup:        |   [Continuous Integration][status]  |                 Test Coverage            |
+|          :thumbsup:        |   [Continuous Integration][status]  |           [Test Coverage][coverage]      |
 |:--------------------------:|:-----------------------------------:|:----------------------------------------:|
 | [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      |
 | [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] |
