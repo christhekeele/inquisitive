@@ -21,10 +21,6 @@ env:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - rvm: rbx-2
-    - rvm: jruby
-    - rvm: ruby-head
   exclude:
     - gemfile: Gemfile.ActiveSupport
       env: ""
