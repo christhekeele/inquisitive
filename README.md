@@ -301,8 +301,92 @@ MyApp.env
 #=> "development"
 MyApp.env.development?
 #=> true
+
 MyApp.env.production?
 #=> false
+```
+
+#### Presence
+
+Environment inquirers can have explicit presence checks, circumventing a common pitfall when reasoning about environment variables. Borrowing from the example above:
+
+```ruby
+ENV['STUB__AUTHENTICATION'] = 'false'
+class MyApp
+  extend Inquisitive::Environment
+  inquires_about 'STUB'
+end
+
+MyApp.stub.authentication
+#=> "false"
+MyApp.stub.authentication?
+#=> true
+MyApp.stub.authentication.true?
+#=> false
+```
+
+It's common to use the presence of environment variables as runtime booleans. This is frequently done by setting the environment variable to the string `"true"` when you want it to be true, and not at all otherwise. As demonstrated, this pattern can lead to ambiguity when the string is other values.
+
+By default such variables will be parsed as an `Inquisitive::String`, so predicate methods will return true whatever their contents, as long as they exist. You can bind the predicate method tighter to an explicit value if you prefer:
+
+```ruby
+ENV['STUB_AUTHENTICATION'] = 'false'
+ENV['STUB_REGISTRATION'] = 'true'
+class MyApp
+  extend Inquisitive::Environment
+  inquires_about 'STUB_AUTHENTICATION', present_if: 'true'
+  inquires_about 'STUB_REGISTRATION', present_if: 'true'
+end
+
+MyApp.stub_authentication
+#=> "false"
+MyApp.stub_authentication?
+#=> false
+
+MyApp.stub_registration
+#=> "true"
+MyApp.stub_registration?
+#=> true
+```
+
+This only works on top-level inquirers, so there's no way to get our nested `MyApp.stubbed.authentication?` to behave as expected. Prefer `MyApp.stubbed.authentication.true?` instead.
+
+The `present_if` check uses `===` under the covers for maximum expressiveness, so you can also use it to match against regexs, classes, and other constructs.
+
+##### Truthy Booleans
+
+`Inquisitive::Environment.truthy` contains a regex useful for reading booleans from environment variables.
+
+```ruby
+ENV['NO'] = 'no'
+ENV['YES'] = 'yes'
+ENV['TRUTHY'] = 'TrUe'
+ENV['FALSEY'] = 'FaLsE'
+ENV['BOOLEAN'] = '1'
+ENV['BOOLENOPE'] = '0'
+class MyCli
+  extend Inquisitive::Environment
+  inquires_about 'NO', present_if: truthy
+  inquires_about 'YES', present_if: truthy
+  inquires_about 'TRUTHY', present_if: truthy
+  inquires_about 'FALSEY', present_if: truthy
+  inquires_about 'BOOLEAN', present_if: truthy
+  inquires_about 'BOOLENOPE', present_if: truthy
+end
+
+MyApp.no?
+#=> false
+MyApp.yes?
+#=> true
+
+MyApp.truthy?
+#=> true
+MyApp.falsey?
+#=> false
+
+MyApp.boolean?
+#=> true
+MyApp.boolenope?
 ```
 
 #### Inquiry mode

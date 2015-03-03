@@ -2,6 +2,10 @@ module Inquisitive
   module Environment
     include Inquisitive
 
+    def truthy
+      /true|yes|1/i
+    end
+
     def inquires_about(env_var, opts={})
 
       env_accessor = opts.fetch(:with, env_var.downcase[/(.*?)(?=(?:_$|$))/])
@@ -29,6 +33,19 @@ module Inquisitive
           end
         end
 
+      end
+
+      present_if = opts.fetch(:present_if, nil)
+
+      @__env_presence__ ||= HashWithIndifferentAccess.new
+      @__env_presence__["#{env_accessor}?"] = present_if if present_if
+
+      define_singleton_method :"#{env_accessor}?" do
+        if @__env_presence__.has_key? __method__
+          @__env_presence__[__method__] === send(predication(__method__))
+        else
+          Inquisitive.present? send(predication(__method__))
+        end
       end
 
     end
