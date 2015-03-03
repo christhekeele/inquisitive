@@ -16,6 +16,7 @@ class InquisitiveCombinatorialEnvironmentTest < EnvironmentTest
   end
   def teardown
     super
+    ENV.delete 'NIL_OBJECT'
     ENV.delete 'STRING'
     ENV.delete 'ARRAY'
     ENV.delete 'HASH__NOTHING'
