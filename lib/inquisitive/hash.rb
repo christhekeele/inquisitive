@@ -1,18 +1,42 @@
 module Inquisitive
   class Hash < HashWithIndifferentAccess
-    include Inquisitive
+    include Inquisitive::Utils
 
     attr_accessor :negated
     def no
       dup.tap{ |s| s.negated = !s.negated }
     end
 
-    def convert_value(value, options={})
-      super(Inquisitive[value], options)
-    end
-
     def === other
       other.class == Class and other == ::Hash or super
+    end
+
+    alias_method :regular_reader, :[] unless method_defined?(:regular_reader)
+    def [](key)
+      Inquisitive[regular_reader key]
+    end
+
+    def fetch(key, default=nil)
+      key = convert_key(key)
+      value = self[key]
+      if Inquisitive.present? value
+        value
+      else
+        if block_given?
+          yield(key)
+        else
+          default
+        end
+      end
+    end
+
+  protected
+
+    def convert_value(value, options={})
+      if options[:for] == :assignment
+        return if value.kind_of? NilClass
+      end
+      super(Inquisitive[value], options)
     end
 
   private

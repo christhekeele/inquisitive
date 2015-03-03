@@ -2,10 +2,19 @@ module Inquisitive
 
   class << self
 
-    def [](object)
-      Inquisitive.const_get(:"#{object.class}", false).new object
+    def coerce(object)
+      coerce! object
     rescue NameError
       object
+    end
+    alias_method :[], :coerce
+
+    def coerce!(object)
+      if Inquisitive.object? object
+        object
+      else
+        Inquisitive.const_get(:"#{object.class}", false).new object
+      end
     end
 
     def present?(object)
@@ -23,20 +32,34 @@ module Inquisitive
       when ::NilClass, NilClass
         false
       else
-        !!object
+        if object.respond_to?(:present?)
+          object.present?
+        else
+          !!object
+        end
       end
+    end
+
+    def object?(object)
+      object.class.name.start_with? 'Inquisitive::'
     end
 
   end
 
 private
 
-  def predicate_method?(string)
-    string[-1] == '?'
-  end
+  module Utils
 
-  def predication(string)
-    string[0..-2]
+  private
+
+    def predicate_method?(string)
+      string[-1] == '?'
+    end
+
+    def predication(string)
+      string[0..-2]
+    end
+
   end
 
 end

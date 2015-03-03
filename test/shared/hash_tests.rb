@@ -10,20 +10,46 @@ module HashTests
     refute hash.registration?
   end
 
-  def test_hash_access_implicit_nil
+  def test_hash_method_access_implicit_nil
     assert_instance_of Inquisitive::NilClass, hash.missing_key
   end
-  def test_hash_access_explicit_nil
+  def test_hash_method_access_explicit_nil
     assert_instance_of Inquisitive::NilClass, hash.nothing
   end
-  def test_hash_access_string
+  def test_hash_method_access_string
     assert_instance_of Inquisitive::String, hash.in
   end
-  def test_hash_access_array
+  def test_hash_method_access_array
     assert_instance_of Inquisitive::Array, hash.databases
   end
-  def test_hash_access_hash
+  def test_hash_method_access_hash
     assert_instance_of Inquisitive::Hash, hash.nested
+  end
+
+  def test_hash_access_implicit_nil
+    assert_instance_of Inquisitive::NilClass, hash[:missing_key]
+  end
+  def test_hash_access_explicit_nil
+    assert_instance_of Inquisitive::NilClass, hash[:nothing]
+  end
+  def test_hash_access_string
+    assert_instance_of Inquisitive::String, hash[:in]
+  end
+  def test_hash_access_array
+    assert_instance_of Inquisitive::Array, hash[:databases]
+  end
+  def test_hash_access_hash
+    assert_instance_of Inquisitive::Hash, hash[:nested]
+  end
+
+  def test_hash_fetch_implicit_nil
+    assert_equal hash.fetch(:missing_key, @default_value), @default_value
+  end
+  def test_hash_fetch_explicit_nil
+    assert_equal hash.fetch(:nothing, @default_value), @default_value
+  end
+  def test_hash_present_value
+    assert_equal hash.fetch(:in), @raw_string
   end
 
   def test_hash_negative_match

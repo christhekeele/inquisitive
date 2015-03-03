@@ -1,6 +1,6 @@
 module Inquisitive
   class Array < ::Array
-    include Inquisitive
+    include Inquisitive::Utils
 
     attr_accessor :negated
     def exclude

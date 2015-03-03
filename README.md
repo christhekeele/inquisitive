@@ -10,7 +10,7 @@ Synopsis
 
 Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's `StringInquirer`.
 
-It also allows you to auto-instanciate and read inquisitive datastructures straight from your `ENV` hash through the `Inquisitive::Environment` module.
+It also allows you to elegantly interrogate your `ENV` hash through the `Inquisitive::Environment` module.
 
 Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from ActiveSupport 4.0.
 
@@ -68,6 +68,92 @@ $ gem install inquisitive
 
 Usage
 -----
+
+
+### Helpers
+
+You can coerce any object to a supported Inquisitive equivalent with the Inquisitive coercion helpers:
+
+```ruby
+Inquisitive.coerce('foo').class
+#=> Inquisitive::String
+Inquisitive.coerce(1).class
+#=> Integer
+
+Inquisitive['foo'].class
+#=> Inquisitive::String
+Inquisitive[1].class
+#=> Integer
+
+Inquisitive.coerce!('foo').class
+#=> Inquisitive::String
+Inquisitive.coerce!(1).class
+#=> NameError
+```
+
+You can check if any object appears to be present with the Inquisitive presence helper:
+
+```ruby
+Inquisitive.present? 'foo'
+#=> true
+Inquisitive.present? %i[foo]
+#=> true
+Inquisitive.present? {foo: :bar}
+#=> true
+Inquisitive.present? 0
+#=> true
+Inquisitive.present? true
+#=> true
+
+Inquisitive.present? ''
+#=> false
+Inquisitive.present? Array.new
+#=> false
+Inquisitive.present? Hash.new
+#=> false
+Inquisitive.present? false
+#=> false
+Inquisitive.present? nil
+#=> false
+Inquisitive.present? Inquisitive::NilClass.new
+#=> false
+```
+
+Finally, you can check if any object is explicitly an Inquisitive object with the Inquisitive object helper:
+
+```ruby
+nil_object = nil
+Inquisitive.object? nil_object
+#=> false
+Inquisitive.object? Inquisitive[nil_object]
+#=> true
+Inquisitive.object? Inquisitive::NilClass.new nil_object
+#=> true
+
+string = 'foo'
+Inquisitive.object? string
+#=> false
+Inquisitive.object? Inquisitive[string]
+#=> true
+Inquisitive.object? Inquisitive::String.new string
+#=> true
+
+array = %i[foo]
+Inquisitive.object? array
+#=> false
+Inquisitive.object? Inquisitive[array]
+#=> true
+Inquisitive.object? Inquisitive::Array.new array
+#=> true
+
+hash = {foo: :bar}
+Inquisitive.object? hash
+#=> false
+Inquisitive.object? Inquisitive[hash]
+#=> true
+Inquisitive.object? Inquisitive::Hash.new hash
+#=> true
+```
 
 
 ### String
@@ -211,6 +297,35 @@ stubbed.api.protocol.http?
 stubbed.api.domains.web?
 #=> false
 ```
+
+This custom `Inquisitive::NilClass` comes with a few caveats, read the section below to understand them.
+
+
+### NilClass
+
+`Inquisitive::NilClass` is a black-hole null object that respects the Inquisitive interface, allowing you to inquire on non-existant nested datastructures as if there was one there, negated methods included:
+
+```ruby
+nillish = Inquisitive::NilClass.new
+#=> nil
+
+nillish.nil?
+#=> true
+nillish.present?
+#=> false
+
+
+nillish.access
+#=> nil
+nillish.not.access
+#=> true
+nillish.exclude.access
+#=> true
+nillish.no.access
+#=> true
+```
+
+**Be warned**: since Ruby doesn't allow subclassing `NilClass` and provides no boolean-coercion mechanism, `Inquisitive::NilClass` **will** appear truthy. I recommend using built-in predicates (`stubbed.authentication? && ...`), presence predicates with ActiveSupport (`stubbed.authentication.present? && ...`), Inquisitive's presence utility (`Inquisitive.present?(stubbed.authentication) && ...`) or nil predicates (`stubbed.authentication.nil? || ...`) in boolean chains. Also note that for `Inquisitive::Hash` access, `stubbed.fetch(:authentication, ...)` behaves as expected.
 
 
 ### Inquisitive Environment

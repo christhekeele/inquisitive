@@ -56,6 +56,7 @@ class Test < MiniTest::Test
       databases: @raw_array,
       nested: {key: 'value', array: %w[foo bar]}
     }
+    @default_value = 'foo'
   end
 
 end

@@ -23,6 +23,7 @@ class InquisitiveCombinatorialEnvironmentTest < EnvironmentTest
     ENV.delete 'HASH__IN'
     ENV.delete 'HASH__DATABASES'
     ENV.delete 'HASH__NESTED__KEY'
+    ENV.delete 'HASH__NESTED__ARRAY'
     ENV.delete 'HASH__SOMETHING_NEW'
   end
 

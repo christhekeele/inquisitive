@@ -1,6 +1,6 @@
 module Inquisitive
   class String < ::String
-    include Inquisitive
+    include Inquisitive::Utils
 
     attr_accessor :negated
     def not

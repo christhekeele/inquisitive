@@ -1,6 +1,6 @@
 module Inquisitive
   module Environment
-    include Inquisitive
+    include Inquisitive::Utils
 
     def truthy
       /true|yes|1/i
@@ -80,7 +80,7 @@ module Inquisitive
 
         def can_find_env_keys_from(var_name)
           found = env_keys_from(var_name)
-          found.empty? ? nil : found
+          Inquisitive.present?(found) ? found : nil
         end
 
         def env_keys_from(var_name)
@@ -91,24 +91,26 @@ module Inquisitive
 
         def set_hash_value_of(hash, var)
           keypath = var.split('__').map(&:downcase)
-          keypath.shift
+          keypath.shift # discard variable namespace
           hash.tap do |hash|
             keypath.reduce(hash) do |namespace, key|
+
               namespace[key] = if key == keypath.last
                 replace_empty Inquisitive[Parser[var]]
               else
-                if namespace[key].respond_to? :store
+                if namespace[key].kind_of? ::Hash
                   namespace[key]
                 else
                   Hash.new
                 end
               end
+
             end
           end
         end
 
         def replace_empty(value)
-          value == "" or value.nil? ? NilClass.new(nil) : value
+          Inquisitive.present?(value) ? value : NilClass.new(nil)
         end
 
       end

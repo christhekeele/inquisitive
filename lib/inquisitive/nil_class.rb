@@ -1,6 +1,6 @@
 module Inquisitive
   class NilClass
-    include Inquisitive
+    include Inquisitive::Utils
 
     def initialize(object=nil); end
 
@@ -12,6 +12,10 @@ module Inquisitive
     alias_method :no, :not
 
     undef_method :nil?, :inspect, :to_s
+
+    def present?
+      presence
+    end
 
   # Since we can't subclass NilClass
   #  (it has no allocate method)
@@ -38,10 +42,14 @@ module Inquisitive
       if nil.respond_to? method_name
         nil.send method_name, *arguments
       elsif predicate_method? method_name
-        false ^ negated
+        presence
       else
         self
       end
+    end
+
+    def presence
+      false ^ negated
     end
 
   end
