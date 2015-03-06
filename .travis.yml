@@ -24,6 +24,7 @@ matrix:
   allow_failures:
     - rvm: 1.9.3
     - rvm: jruby # Until it gets up to 2.0.0 syntax
+    - rvm: rbx-2 # Ditto
   exclude:
     - gemfile: Gemfile.ActiveSupport
       env: ""
