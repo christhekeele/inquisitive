@@ -1,3 +1,5 @@
+require 'inquisitive/utils'
+
 module Inquisitive
   module Environment
     include Inquisitive::Utils
@@ -8,44 +10,27 @@ module Inquisitive
 
     def inquires_about(env_var, opts={})
 
-      env_accessor = opts.fetch(:with, env_var.downcase[/(.*?)(?=(?:_$|$))/])
-      @__env_accessors__ ||= HashWithIndifferentAccess.new
-      @__env_accessors__[env_accessor] = env_var
+      env_accessor = opts.fetch(:with, env_var.downcase[/(.*?)(?=(?:_$|$))/]).to_sym
+      env_presence = :"#{env_accessor}?"
+      env_default  = opts[:default]
+      present_if = opts[:present_if]
 
-      mode = Inquisitive[ opts.fetch(:mode, :static).to_s ]
-
-      if mode.dynamic?
-
-        define_singleton_method :"#{env_accessor}" do
-          Inquisitive[Parser[@__env_accessors__[__method__]]]
+      define_singleton_method env_presence do |with_default: true|
+        !!(with_default and env_default) || if present_if
+          present_if === Inquisitive[Parser[env_var]]
+        else
+          Inquisitive.present? Inquisitive[Parser[env_var]]
         end
-
-      else
-
-        @__cached_env__ ||= HashWithIndifferentAccess.new
-        @__cached_env__[env_accessor] = Inquisitive[Parser[env_var]] if mode.static?
-
-        define_singleton_method :"#{env_accessor}" do
-          if @__cached_env__.has_key? __method__
-            @__cached_env__[__method__]
-          else
-            @__cached_env__[__method__] = Inquisitive[Parser[@__env_accessors__[__method__]]]
-          end
-        end
-
       end
 
-      present_if = opts.fetch(:present_if, nil)
-
-      @__env_presence__ ||= HashWithIndifferentAccess.new
-      @__env_presence__["#{env_accessor}?"] = present_if if present_if
-
-      define_singleton_method :"#{env_accessor}?" do
-        if @__env_presence__.has_key? __method__
-          @__env_presence__[__method__] === send(predication(__method__))
-        else
-          Inquisitive.present? send(predication(__method__))
-        end
+      define_singleton_method env_accessor do
+        Inquisitive[
+          if send env_presence, with_default: false
+            Parser[env_var]
+          else
+            env_default
+          end
+        ]
       end
 
     end
@@ -56,7 +41,7 @@ module Inquisitive
       class << self
 
         def [](var_name)
-          result = if ENV.has_key? var_name
+          result = if ENV.has_key? var_name.to_s
 
             env_var = ENV[var_name]
             if env_var.include? ','

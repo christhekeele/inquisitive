@@ -196,7 +196,7 @@ stubbed = Inquisitive::Hash.new(
   in: 'development',
   services: %w[database api],
   api: {protocol: 'https', subdomains: %w[app web db]},
-  ignorable: { junk: [ "" ] }
+  ignorable: { junk: [ '' ] }
 )
 #=> {"authentication"=>true,
 #=>  "in"=>"development",
@@ -325,7 +325,7 @@ nillish.no.access
 #=> true
 ```
 
-**Be warned**: since Ruby doesn't allow subclassing `NilClass` and provides no boolean-coercion mechanism, `Inquisitive::NilClass` **will** appear truthy. I recommend using built-in predicates (`stubbed.authentication? && ...`), presence predicates with ActiveSupport (`stubbed.authentication.present? && ...`), Inquisitive's presence utility (`Inquisitive.present?(stubbed.authentication) && ...`) or nil predicates (`stubbed.authentication.nil? || ...`) in boolean chains. Also note that for `Inquisitive::Hash` access, `stubbed.fetch(:authentication, ...)` behaves as expected.
+**Be warned**: since Ruby doesn't allow subclassing `NilClass` and provides no boolean-coercion interface, `Inquisitive::NilClass` **will** appear truthy. I recommend using built-in predicates (`stubbed.authentication? && ...`), presence predicates with ActiveSupport (`stubbed.authentication.present? && ...`), Inquisitive's presence utility (`Inquisitive.present?(stubbed.authentication) && ...`) or nil predicates (`stubbed.authentication.nil? || ...`) in boolean chains. Also note that for `Inquisitive::Hash` access, `stubbed.fetch(:authentication, ...)` behaves as expected.
 
 
 ### Inquisitive Environment
@@ -335,7 +335,7 @@ nillish.no.access
 #### Strings
 
 ```ruby
-ENV['ENVIRONMENT'] = "development"
+ENV['ENVIRONMENT'] = 'development'
 class MyApp
   extend Inquisitive::Environment
   inquires_about 'ENVIRONMENT'
@@ -354,7 +354,7 @@ MyApp.environment.production?
 Arrays are recognized when environment variables contain commas:
 
 ```ruby
-ENV['SUPPORTED_DATABASES'] = "mysql,postgres,sqlite"
+ENV['SUPPORTED_DATABASES'] = 'mysql,postgres,sqlite'
 class MyApp
   extend Inquisitive::Environment
   inquires_about 'SUPPORTED_DATABASES'
@@ -373,11 +373,11 @@ MyApp.supported_databases.sql_server?
 Hashes are recognized when environment variables names contain double underscores:
 
 ```ruby
-ENV['STUB__AUTHENTICATION'] = 'true'
-ENV['STUB__IN'] = "development"
-ENV['STUB__SERVICES'] = "database,api"
-ENV['STUB__API__PROTOCOL'] = "https"
-ENV['STUB__API__SUBDOMAINS'] = "app,web,db"
+ENV['STUB__AUTHENTICATION']  = 'true'
+ENV['STUB__IN']              = 'development'
+ENV['STUB__SERVICES']        = 'database,api'
+ENV['STUB__API__PROTOCOL']   = 'https'
+ENV['STUB__API__SUBDOMAINS'] = 'app,web,db'
 class MyApp
   extend Inquisitive::Environment
   inquires_about 'STUB'
@@ -401,12 +401,27 @@ MyApp.stub.api.subdomains.web?
 #=> true
 ```
 
+#### Defaults
+
+You can set default values for your environment inquirers.
+```ruby
+class MyApp
+  extend Inquisitive::Environment
+  inquires_about 'ENV', default: 'production'
+end
+
+MyApp.env?
+#=> true
+MyApp.env.production?
+#=> true
+```
+
 #### Naming
 
-You can name your environment inquirers with `:with`:
+You can also give your environment inquirers custom names:
 
 ```ruby
-ENV['ENVIRONMENT'] = "development"
+ENV['ENVIRONMENT'] = 'development'
 class MyApp
   extend Inquisitive::Environment
   inquires_about 'ENVIRONMENT', with: :env
@@ -446,11 +461,11 @@ By default such variables will be parsed as an `Inquisitive::String`, so predica
 
 ```ruby
 ENV['STUB_AUTHENTICATION'] = 'false'
-ENV['STUB_REGISTRATION'] = 'true'
+ENV['STUB_REGISTRATION']   = 'true'
 class MyApp
   extend Inquisitive::Environment
   inquires_about 'STUB_AUTHENTICATION', present_if: 'true'
-  inquires_about 'STUB_REGISTRATION', present_if: 'true'
+  inquires_about 'STUB_REGISTRATION',   present_if: 'true'
 end
 
 MyApp.stub_authentication
@@ -468,24 +483,24 @@ This only works on top-level inquirers, so there's no way to get our nested `MyA
 
 The `present_if` check uses `===` under the covers for maximum expressiveness, so you can also use it to match against regexs, classes, and other constructs.
 
-##### Truthy Booleans
+##### Truthy Strings
 
-`Inquisitive::Environment.truthy` contains a regex useful for reading booleans from environment variables.
+`Inquisitive::Environment.truthy` contains a regex useful for trying to read truthy values from string environment variables.
 
 ```ruby
-ENV['NO'] = 'no'
-ENV['YES'] = 'yes'
-ENV['TRUTHY'] = 'TrUe'
-ENV['FALSEY'] = 'FaLsE'
-ENV['BOOLEAN'] = '1'
+ENV['NO']        = 'no'
+ENV['YES']       = 'yes'
+ENV['TRUTHY']    = 'TrUe'
+ENV['FALSEY']    = 'FaLsE'
+ENV['BOOLEAN']   = '1'
 ENV['BOOLENOPE'] = '0'
 class MyCli
   extend Inquisitive::Environment
-  inquires_about 'NO', present_if: truthy
-  inquires_about 'YES', present_if: truthy
-  inquires_about 'TRUTHY', present_if: truthy
-  inquires_about 'FALSEY', present_if: truthy
-  inquires_about 'BOOLEAN', present_if: truthy
+  inquires_about 'NO',        present_if: truthy
+  inquires_about 'YES',       present_if: truthy
+  inquires_about 'TRUTHY',    present_if: truthy
+  inquires_about 'FALSEY',    present_if: truthy
+  inquires_about 'BOOLEAN',   present_if: truthy
   inquires_about 'BOOLENOPE', present_if: truthy
 end
 
@@ -502,36 +517,8 @@ MyApp.falsey?
 MyApp.boolean?
 #=> true
 MyApp.boolenope?
+#=> false
 ```
-
-#### Inquiry mode
-
-Environment inquirers have three configurable modes, defaulting to `:static`.
-
-```ruby
-class MyApp
-  extend Inquisitive::Environment
-  inquires_about 'STUB', mode: %i[dynamic lazy static].sample
-end
-```
-
-- **Dynamic**
-
-    Environment inquiries parse `ENV` on every invocation.
-
-    Use if you're manipulating the environment in between invocations, so `Inquisitive` can pick up on new values, detect changes between string or array notation, and discover new keys for hash notation.
-
-- **Lazy**
-
-    Environment inquiries check `ENV` on their first invocation, and re-use the response in future invocations.
-
-    Use if you're loading the module with environment inquiry methods before you've finished preparing your environment.
-
-- **Static**
-
-    Environment inquiries use the contents of `ENV` at the moment `inquires_about` was invoked.
-
-    Use if your application is well-behaved and doesn't go mucking around with the environment at runtim.
 
 
 

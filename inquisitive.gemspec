@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
   DESC
   spec.homepage      = "http://christhekeele.github.io/inquisitive"
   spec.license       = "MIT"
-  spec.files         = `git ls-files lib README.md LICENSE.md`.split($/)
-  spec.test_files    = `git ls-files test inquisitive.gemspec Gemfile Gemfile.lock Gemfile.ActiveSupport Rakefile .travis.yml .coveralls.yml`.split($/)
+  spec.files         = `git ls-files lib inquisitive.gemspec Gemfile Gemfile.lock Gemfile.ActiveSupport Rakefile CHANGELOG.md README.md LICENSE.md`.split($/)
+  spec.test_files    = `git ls-files test .travis.yml .coveralls.yml`.split($/)
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler",   ">= 1.3"

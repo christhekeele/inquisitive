@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class InquisitiveTest < Test
-  Utils = Module.new.extend Inquisitive::Utils
   HashWithIndifferentAccess ||= Inquisitive::HashWithIndifferentAccess
 
   def setup
@@ -146,26 +145,14 @@ class InquisitiveTest < Test
     refute Inquisitive.present?({})
   end
 
-####
-# UTILS
-##
-  def test_found_symbol_predicate_method_helper
-    assert Utils.send :predicate_method?, :foo?
-  end
-  def test_found_string_predicate_method_helper
-    assert Utils.send :predicate_method?, "foo?"
-  end
-  def test_missing_symbol_predicate_method_helper
-    refute Utils.send :predicate_method?, :foo
-  end
-  def test_missing_string_predicate_method_helper
-    refute Utils.send :predicate_method?, "foo"
+  def test_presence_predication
+    assert_throws :predicated do
+      object = Object.new
+      def object.present?
+        throw :predicated
+      end
+      Inquisitive.present? object
+    end
   end
 
-  def test_symbol_predication_helper
-    assert_equal Utils.send(:predication, :foo?),  'foo'
-  end
-  def test_string_predication_helper
-    assert_equal Utils.send(:predication, "foo?"), 'foo'
-  end
 end

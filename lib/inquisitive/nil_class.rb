@@ -1,3 +1,5 @@
+require 'inquisitive/utils'
+
 module Inquisitive
   class NilClass
     include Inquisitive::Utils
@@ -38,9 +40,9 @@ module Inquisitive
     def respond_to_missing?(method_name, include_private = false)
       true # nil.respond_to? method_name or predicate_method? method_name
     end
-    def method_missing(method_name, *arguments)
+    def method_missing(method_name, *arguments, &block)
       if nil.respond_to? method_name
-        nil.send method_name, *arguments
+        nil.send method_name, *arguments, &block
       elsif predicate_method? method_name
         presence
       else
