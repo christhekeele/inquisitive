@@ -14,18 +14,9 @@ module CombinatorialEnvironmentTests
     )
   end
 
-  def test_changing_variable_after_definition
-    App.inquires_about @type.upcase, mode: @mode, with: :precache
-    test = @mode.static? ? :assert_equal : :refute_equal
-    precache = App.precache
-    send :"change_#{@type}_variable"
-    send test, App.send(@type), precache
-  end
-
-  def test_changing_variable_after_invocation
-    test = @mode.dynamic? ? :assert_change : :refute_change
-    monitor = -> { App.send(@type) }
-    send test, monitor do
+  def test_changing_variable
+    App.inquires_about @type.upcase, with: :changeable
+    assert_change ->{ App.changeable } do
       send :"change_#{@type}_variable"
     end
   end

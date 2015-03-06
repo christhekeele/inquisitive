@@ -1,3 +1,5 @@
+require 'inquisitive/utils'
+
 module Inquisitive
   class String < ::String
     include Inquisitive::Utils

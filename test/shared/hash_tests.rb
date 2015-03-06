@@ -42,13 +42,24 @@ module HashTests
     assert_instance_of Inquisitive::Hash, hash[:nested]
   end
 
-  def test_hash_fetch_implicit_nil
+  def test_hash_fetch_missing
+    assert_raises KeyError do
+      hash.fetch(:nothing)
+    end
+  end
+  def test_hash_fetch_implicit_nil_with_default_value
     assert_equal hash.fetch(:missing_key, @default_value), @default_value
   end
-  def test_hash_fetch_explicit_nil
+  def test_hash_fetch_explicit_nil_with_default_value
     assert_equal hash.fetch(:nothing, @default_value), @default_value
   end
-  def test_hash_present_value
+  def test_hash_fetch_implicit_nil_with_default_block
+    assert_equal hash.fetch(:missing_key){@default_value}, @default_value
+  end
+  def test_hash_fetch_explicit_nil_with_default_block
+    assert_equal hash.fetch(:nothing){@default_value}, @default_value
+  end
+  def test_hash_fetch_present_value
     assert_equal hash.fetch(:in), @raw_string
   end
 

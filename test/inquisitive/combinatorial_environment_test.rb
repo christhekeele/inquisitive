@@ -43,46 +43,40 @@ class InquisitiveCombinatorialEnvironmentTest < EnvironmentTest
 
 end
 
-%w[dynamic lazy static].each do |mode|
-  %w[nil_object string array hash].each do |type|
+%w[nil_object string array hash].each do |type|
 
-    Inquisitive.const_set(
-      :"Inquisitive#{mode.capitalize}#{type.split('_').map(&:capitalize).join}EnvironmentTest",
-      Class.new(InquisitiveCombinatorialEnvironmentTest) do
+  Inquisitive.const_set(
+    :"Inquisitive#{type.split('_').map(&:capitalize).join}EnvironmentTest",
+    Class.new(InquisitiveCombinatorialEnvironmentTest) do
 
-        class << self
-          attr_accessor :mode, :type
-        end
-
-        def setup
-          super
-          @mode = Inquisitive[self.class.mode]
-          @type = Inquisitive[self.class.type]
-          App.inquires_about @type.upcase, mode: @mode
-        end
-
-        def nil_object
-          App.nil_object
-        end
-        def string
-          App.string
-        end
-        def array
-          App.array
-        end
-        def hash
-          App.hash
-        end
-
-        include CombinatorialEnvironmentTests
-
+      class << self
+        attr_accessor :type
       end
-    ).tap do |klass|
-      klass.mode = mode
-      klass.type = type
-    end.send :include, Object.const_get(:"#{type.split('_').map(&:capitalize).join}Tests")
-    # Mixes in type-specific tests to ensure lookup behaves normally
-    #  when accessed through the modes of App getters
 
-  end
+      def setup
+        super
+        @type = Inquisitive[self.class.type]
+        App.inquires_about @type.upcase
+      end
+
+      def nil_object
+        App.nil_object
+      end
+      def string
+        App.string
+      end
+      def array
+        App.array
+      end
+      def hash
+        App.hash
+      end
+
+      include CombinatorialEnvironmentTests
+
+    end
+  ).tap do |klass|
+    klass.type = type
+  end.send :include, Object.const_get(:"#{type.split('_').map(&:capitalize).join}Tests")
+
 end

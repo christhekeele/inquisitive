@@ -13,6 +13,15 @@ module NilObjectTests
   def test_nil_object_miss
     refute nil_object.anything_else?
   end
+  def test_nil_object_presence_predicate
+    refute nil_object.present?
+  end
+  def test_nil_object_presence_predicate_negataive
+    assert nil_object.not.present?
+  end
+  def test_nil_object_presence_predicate_double_negataive
+    refute nil_object.not.not.present?
+  end
 
   def test_nil_object_string_interface
     string = nil_object

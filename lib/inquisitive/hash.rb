@@ -1,3 +1,5 @@
+require 'inquisitive/utils'
+
 module Inquisitive
   class Hash < HashWithIndifferentAccess
     include Inquisitive::Utils
@@ -24,8 +26,10 @@ module Inquisitive
       else
         if block_given?
           yield(key)
-        else
+        elsif default
           default
+        else
+          raise KeyError, "key not found: #{key}"
         end
       end
     end

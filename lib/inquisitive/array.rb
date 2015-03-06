@@ -1,3 +1,5 @@
+require 'inquisitive/utils'
+
 module Inquisitive
   class Array < ::Array
     include Inquisitive::Utils
