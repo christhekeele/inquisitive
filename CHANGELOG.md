@@ -8,12 +8,102 @@ Starting with **[2.0.0](#2.0.0)**, Inquisitive follows [symantic versioning](sym
 Releases
 --------
 
+[4.0.0]: https://github.com/christhekeele/inquisitive/tree/4.0.0
+
 [2.0.1]: https://github.com/christhekeele/inquisitive/tree/2.0.1
 [2.0.0]: https://github.com/christhekeele/inquisitive/tree/2.0.0
+
 [1.2.0]: https://github.com/christhekeele/inquisitive/tree/f314eaf84f7c3d9a2d56ae684d031dd81d2f7b85
 
+- [4.0.0](#4.0.0)
 - [2.0.0](#2.0.0)
 - [1.2.0](#1.2.0)
+
+4.0.0 - [2015.03.06][4.0.0]
+---------------------------
+
+Inquisitive has seen several new versions since this Changelog has been updated, all aimed at simplifying the codebase and adding a few features I've long desired. These goals have been accomplished with version 4.0.0, so now's as good as time as any to enumerate the changes. It's also a great time to upgrade!
+
+- `ruby-1.9.3`: **support dropped**
+
+  Support for ruby 1.9.3 has been dropped, as it has reached end of life. Syntactically 4.0.0 should still work with 1.9.3, but that's no longer assured and may change. 1.9.3 is still a part of the build matrix but failures are allowed. Refer to the continuous integration to see if it's still viable.
+
+- `Inquisitive::Environment.inquires_about`: **modes dropped**
+
+  Environment inquiry modes no longer exist; all lookups are dynamic. While cached inquiries are about 3 times faster each inquiry takes a fraction of a percent of a millisecond so the speed up is negligible. More importantly, dynamic-by-default follows the principle of least surprise. Between the two there's no reason offer other modes. The option is now silently ignored when declaring inquirers, but your application's behavior may change if you were relying on caching by default.
+
+- `Inquisitive::NilClass`: **null objects now available**
+
+  While `Inquisitive::NilClass`s don't act falsey in boolean checks, they're useful wherever you may have been expecting another Inquisitive object, because they respond to methods like all other Inquisitive objects. It's also a "black hole" object, so it'll return itself on deep inquiries to mock nested inquisitive datastructures:
+
+  ```ruby
+  nillish = Inquisitive::NilClass.new
+  #=> nil
+
+  nillish.nil?
+  #=> true
+  nillish.present?
+  #=> false
+
+  nillish.predicate?
+  #=> false
+  nillish.access
+  #=> nil
+  nillish.deep.access
+  #=> nil
+  nillish.not.access
+  #=> true
+  nillish.exclude.access
+  #=> true
+  nillish.no.access
+  #=> true
+  ```
+
+- `Inquisitive::Hash`: **missing keys return `Inquisitive::NilClass` instances**
+
+  This allows for further method chaining when you anticipate nested datastructures where there aren't any.
+
+- `Inquisitive::Environment.inquires_about`: **default values**
+
+  Environment inquirers can now set default values:
+
+  ```ruby
+  class MyApp
+    extend Inquisitive::Environment
+    inquires_about 'ENV', default: 'production'
+  end
+
+  MyApp.env?
+  #=> true
+  MyApp.env.production?
+  #=> true
+  ```
+
+- `Inquisitive::Environment.inquires_about`: **empty values**
+
+  Environment inquirers without defaults will return `Inquisitive::NilClass` instances for empty environment variables to allow method chains as if you had nested datastructures.
+
+- `Inquisitive::Environment.inquires_about`: **nested hashes**
+
+  You can now construct nested hashes from environment variables with multiple `__`s in their names:
+
+  ```ruby
+  ENV['STUB__API__PROTOCOL']   = 'https'
+  ENV['STUB__API__SUBDOMAINS'] = 'app,web,db'
+  class MyApp
+    extend Inquisitive::Environment
+    inquires_about 'STUB'
+  end
+
+  MyApp.stub
+  #=> {api: {protocol: "https", subdomains: ["app", "web", "db"]}}
+  MyApp.stub.api.protocol.http?
+  #=> false
+  MyApp.stub.api.subdomains.web?
+  #=> true
+  ```
+
+Refer to the documentation in the README.md for a through overview and more examples.
 
 2.0.1 - [2014.09.24][2.0.1]
 ---------------------------

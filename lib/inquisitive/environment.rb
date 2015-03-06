@@ -15,8 +15,8 @@ module Inquisitive
       env_default  = opts[:default]
       present_if = opts[:present_if]
 
-      define_singleton_method env_presence do |with_default: true|
-        !!(with_default and env_default) || if present_if
+      define_singleton_method env_presence do |opts={with_default: true}|
+        !!(opts[:with_default] and env_default) || if present_if
           present_if === Inquisitive[Parser[env_var]]
         else
           Inquisitive.present? Inquisitive[Parser[env_var]]

@@ -315,7 +315,11 @@ nillish.present?
 #=> false
 
 
+nillish.predicate?
+#=> false
 nillish.access
+#=> nil
+nillish.deep.access
 #=> nil
 nillish.not.access
 #=> true
@@ -404,6 +408,7 @@ MyApp.stub.api.subdomains.web?
 #### Defaults
 
 You can set default values for your environment inquirers.
+
 ```ruby
 class MyApp
   extend Inquisitive::Environment
