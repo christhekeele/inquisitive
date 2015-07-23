@@ -1,37 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta charset="UTF-8">
     <title>Inquisitive by christhekeele</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <section class="page-header">
+      <h1 class="project-name">Inquisitive</h1>
+      <h2 class="project-tagline">Predicate methods for those curious about their Ruby datastructures.</h2>
+      <a href="https://github.com/christhekeele/inquisitive" class="btn">View on GitHub</a>
+      <a href="https://github.com/christhekeele/inquisitive/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/christhekeele/inquisitive/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <header>
-          <h1>Inquisitive</h1>
-          <h2>Predicate methods for those curious about their Ruby datastructures.</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/christhekeele/inquisitive/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/christhekeele/inquisitive/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/christhekeele/inquisitive" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1>
+    <section class="main-content">
+      <h1>
 <a id="inquisitive" class="anchor" href="#inquisitive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inquisitive</h1>
 
 <blockquote>
@@ -41,11 +29,15 @@
 <h2>
 <a id="synopsis" class="anchor" href="#synopsis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Synopsis</h2>
 
-<p>Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's <code>StringInquirer</code>.</p>
+<p>Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's <a href="https://github.com/rails/rails/blob/master/activesupport/lib/active_support/string_inquirer.rb"><code>StringInquirer</code></a>.</p>
 
-<p>It also allows you to auto-instanciate and read inquisitive datastructures straight from your <code>ENV</code> hash through the <code>Inquisitive::Environment</code> module.</p>
+<p>It also allows you to elegantly interrogate your <code>ENV</code> hash through the <code>Inquisitive::Environment</code> module.</p>
 
-<p>Inquisitive will try to use ActiveSupport's <code>HashWithIndifferentAccess</code>, but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from ActiveSupport 4.0.</p>
+<p>Inquisitive will try to use ActiveSupport's <a href="guides.rubyonrails.org/active_support_core_extensions.html#indifferent-access"><code>HashWithIndifferentAccess</code></a>, but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from <a href="https://github.com/rails/rails/blob/4-0-stable/activesupport/lib/active_support/hash_with_indifferent_access.rb">ActiveSupport 4.0</a>.</p>
+
+<p>Inquisitive is tested against all maintained versions of Ruby and ActiveSupport.</p>
+
+<hr>
 
 <h2>
 <a id="status" class="anchor" href="#status" aria-hidden="true"><span class="octicon octicon-link"></span></a>Status</h2>
@@ -74,27 +66,111 @@
 </tbody>
 </table>
 
+<hr>
+
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>To add to your project:</p>
 
-<div class="highlight highlight-bash"><pre>$ <span class="pl-s3">echo</span> <span class="pl-s1"><span class="pl-pds">"</span>gem 'inquisitive'<span class="pl-pds">"</span></span> <span class="pl-k">&gt;&gt;</span> Gemfile
+<div class="highlight highlight-bash"><pre>$ <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>gem 'inquisitive'<span class="pl-pds">"</span></span> <span class="pl-k">&gt;&gt;</span> Gemfile
 $ bundle install</pre></div>
 
 <p>Otherwise:</p>
 
 <div class="highlight highlight-bash"><pre>$ gem install inquisitive</pre></div>
 
+<hr>
+
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="helpers" class="anchor" href="#helpers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Helpers</h3>
+
+<p>You can coerce any object to a supported Inquisitive equivalent with the Inquisitive coercion helpers:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">Inquisitive</span>.coerce(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>).class
+<span class="pl-c">#=&gt; Inquisitive::String</span>
+<span class="pl-c1">Inquisitive</span>.coerce(<span class="pl-c1">1</span>).class
+<span class="pl-c">#=&gt; Integer</span>
+
+<span class="pl-c1">Inquisitive</span>[<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>].class
+<span class="pl-c">#=&gt; Inquisitive::String</span>
+<span class="pl-c1">Inquisitive</span>[<span class="pl-c1">1</span>].class
+<span class="pl-c">#=&gt; Integer</span>
+
+<span class="pl-c1">Inquisitive</span>.coerce!(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>).class
+<span class="pl-c">#=&gt; Inquisitive::String</span>
+<span class="pl-c1">Inquisitive</span>.coerce!(<span class="pl-c1">1</span>).class
+<span class="pl-c">#=&gt; NameError</span></pre></div>
+
+<p>You can check if any object appears to be present with the Inquisitive presence helper:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">Inquisitive</span>.present? <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-k">%</span>i[foo]
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">Inquisitive</span>.present? {<span class="pl-c1">foo:</span> <span class="pl-c1">:bar</span>}
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-c1">0</span>
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-c1">true</span>
+<span class="pl-c">#=&gt; true</span>
+
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-c1">Array</span>.<span class="pl-k">new</span>
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-c1">Hash</span>.<span class="pl-k">new</span>
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-c1">false</span>
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-c1">nil</span>
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.present? <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">NilClass</span>.<span class="pl-k">new</span>
+<span class="pl-c">#=&gt; false</span></pre></div>
+
+<p>Finally, you can check if any object is explicitly an Inquisitive object with the Inquisitive object helper:</p>
+
+<div class="highlight highlight-ruby"><pre>nil_object <span class="pl-k">=</span> <span class="pl-c1">nil</span>
+<span class="pl-c1">Inquisitive</span>.object? nil_object
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.object? <span class="pl-c1">Inquisitive</span>[nil_object]
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">Inquisitive</span>.object? <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">NilClass</span>.<span class="pl-k">new</span> nil_object
+<span class="pl-c">#=&gt; true</span>
+
+string <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>
+<span class="pl-c1">Inquisitive</span>.object? string
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.object? <span class="pl-c1">Inquisitive</span>[string]
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">Inquisitive</span>.object? <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">String</span>.<span class="pl-k">new</span> string
+<span class="pl-c">#=&gt; true</span>
+
+array <span class="pl-k">=</span> <span class="pl-k">%</span>i[foo]
+<span class="pl-c1">Inquisitive</span>.object? array
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.object? <span class="pl-c1">Inquisitive</span>[array]
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">Inquisitive</span>.object? <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Array</span>.<span class="pl-k">new</span> array
+<span class="pl-c">#=&gt; true</span>
+
+hash <span class="pl-k">=</span> {<span class="pl-c1">foo:</span> <span class="pl-c1">:bar</span>}
+<span class="pl-c1">Inquisitive</span>.object? hash
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">Inquisitive</span>.object? <span class="pl-c1">Inquisitive</span>[hash]
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">Inquisitive</span>.object? <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Hash</span>.<span class="pl-k">new</span> hash
+<span class="pl-c">#=&gt; true</span></pre></div>
 
 <h3>
 <a id="string" class="anchor" href="#string" aria-hidden="true"><span class="octicon octicon-link"></span></a>String</h3>
 
 <p><code>Inquisitive::String</code> tests equality:</p>
 
-<div class="highlight highlight-ruby"><pre>environment <span class="pl-k">=</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-s3">String</span>.<span class="pl-k">new</span> <span class="pl-s1"><span class="pl-pds">'</span>development<span class="pl-pds">'</span></span>
+<div class="highlight highlight-ruby"><pre>environment <span class="pl-k">=</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">String</span>.<span class="pl-k">new</span> <span class="pl-s"><span class="pl-pds">'</span>development<span class="pl-pds">'</span></span>
 <span class="pl-c">#=&gt; "development"</span>
 environment.development?
 <span class="pl-c">#=&gt; true</span>
@@ -106,7 +182,7 @@ environment.<span class="pl-k">not</span>.development?
 
 <p><code>Inquisitive::Array</code> tests inclusion:</p>
 
-<div class="highlight highlight-ruby"><pre>supported_databases <span class="pl-k">=</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-s3">Array</span>.<span class="pl-k">new</span> <span class="pl-s1"><span class="pl-pds">%w[</span>mysql postgres sqlite<span class="pl-pds">]</span></span>
+<div class="highlight highlight-ruby"><pre>supported_databases <span class="pl-k">=</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Array</span>.<span class="pl-k">new</span> <span class="pl-s"><span class="pl-pds">%w[</span>mysql postgres sqlite<span class="pl-pds">]</span></span>
 <span class="pl-c">#=&gt; ["mysql", "postgres", "sqlite"]</span>
 supported_databases.postgres?
 <span class="pl-c">#=&gt; true</span>
@@ -120,12 +196,12 @@ supported_databases.exclude.sql_server?
 
 <p><code>Inquisitive::Hash</code> provides struct-like access to its values, wrapped in other inquisitive objects:</p>
 
-<div class="highlight highlight-ruby"><pre>stubbed <span class="pl-k">=</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-s3">Hash</span>.<span class="pl-k">new</span>(
+<div class="highlight highlight-ruby"><pre>stubbed <span class="pl-k">=</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Hash</span>.<span class="pl-k">new</span>(
   <span class="pl-c1">authentication:</span> <span class="pl-c1">true</span>,
-  <span class="pl-c1">in:</span> <span class="pl-s1"><span class="pl-pds">'</span>development<span class="pl-pds">'</span></span>,
-  <span class="pl-c1">services:</span> <span class="pl-s1"><span class="pl-pds">%w[</span>database api<span class="pl-pds">]</span></span>,
-  <span class="pl-c1">api:</span> {<span class="pl-c1">protocol:</span> <span class="pl-s1"><span class="pl-pds">'</span>https<span class="pl-pds">'</span></span>, <span class="pl-c1">subdomains:</span> <span class="pl-s1"><span class="pl-pds">%w[</span>app web db<span class="pl-pds">]</span></span>},
-  <span class="pl-c1">ignorable:</span> { <span class="pl-c1">junk:</span> [ <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span> ] }
+  <span class="pl-c1">in:</span> <span class="pl-s"><span class="pl-pds">'</span>development<span class="pl-pds">'</span></span>,
+  <span class="pl-c1">services:</span> <span class="pl-s"><span class="pl-pds">%w[</span>database api<span class="pl-pds">]</span></span>,
+  <span class="pl-c1">api:</span> {<span class="pl-c1">protocol:</span> <span class="pl-s"><span class="pl-pds">'</span>https<span class="pl-pds">'</span></span>, <span class="pl-c1">subdomains:</span> <span class="pl-s"><span class="pl-pds">%w[</span>app web db<span class="pl-pds">]</span></span>},
+  <span class="pl-c1">ignorable:</span> { <span class="pl-c1">junk:</span> [ <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span> ] }
 )
 <span class="pl-c">#=&gt; {"authentication"=&gt;true,</span>
 <span class="pl-c">#=&gt;  "in"=&gt;"development",</span>
@@ -163,7 +239,7 @@ stubbed.api.domains.web?
 
 <p><code>Inquisitive::Hash</code> also allows negation with the <code>no</code> method:</p>
 
-<div class="highlight highlight-ruby"><pre>config <span class="pl-k">=</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-s3">Hash</span>.<span class="pl-k">new</span>(<span class="pl-c1">database:</span> <span class="pl-s1"><span class="pl-pds">'</span>postgres<span class="pl-pds">'</span></span>)
+<div class="highlight highlight-ruby"><pre>config <span class="pl-k">=</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Hash</span>.<span class="pl-k">new</span>(<span class="pl-c1">database:</span> <span class="pl-s"><span class="pl-pds">'</span>postgres<span class="pl-pds">'</span></span>)
 <span class="pl-c">#=&gt; {"database"=&gt;"postgres"}</span>
 
 config.database?
@@ -177,7 +253,7 @@ config.no.api?
 
 <p>Empty keys and nil values become instances of <code>Inquisitive::NilClass</code>, which is a black-hole null object that respects the Inquisitive interface, allowing you to inquire on non-existant nested datastructures as if there was one there, negated methods included:</p>
 
-<div class="highlight highlight-ruby"><pre>stubbed <span class="pl-k">=</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-s3">Hash</span>.<span class="pl-k">new</span>
+<div class="highlight highlight-ruby"><pre>stubbed <span class="pl-k">=</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Hash</span>.<span class="pl-k">new</span>
 <span class="pl-c">#=&gt; {}</span>
 
 <span class="pl-c"># We can query it as if we assumed we had:</span>
@@ -222,6 +298,37 @@ stubbed.api.protocol.http?
 stubbed.api.domains.web?
 <span class="pl-c">#=&gt; false</span></pre></div>
 
+<p>This custom <code>Inquisitive::NilClass</code> comes with a few caveats, read the section below to understand them.</p>
+
+<h3>
+<a id="nilclass" class="anchor" href="#nilclass" aria-hidden="true"><span class="octicon octicon-link"></span></a>NilClass</h3>
+
+<p><code>Inquisitive::NilClass</code> is a black-hole null object that respects the Inquisitive interface, allowing you to inquire on non-existant nested datastructures as if there was one there, negated methods included:</p>
+
+<div class="highlight highlight-ruby"><pre>nillish <span class="pl-k">=</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">NilClass</span>.<span class="pl-k">new</span>
+<span class="pl-c">#=&gt; nil</span>
+
+nillish.nil?
+<span class="pl-c">#=&gt; true</span>
+nillish.present?
+<span class="pl-c">#=&gt; false</span>
+
+
+nillish.predicate?
+<span class="pl-c">#=&gt; false</span>
+nillish.access
+<span class="pl-c">#=&gt; nil</span>
+nillish.deep.access
+<span class="pl-c">#=&gt; nil</span>
+nillish.<span class="pl-k">not</span>.access
+<span class="pl-c">#=&gt; true</span>
+nillish.exclude.access
+<span class="pl-c">#=&gt; true</span>
+nillish.no.access
+<span class="pl-c">#=&gt; true</span></pre></div>
+
+<p><strong>Be warned</strong>: since Ruby doesn't allow subclassing <code>NilClass</code> and provides no boolean-coercion interface, <code>Inquisitive::NilClass</code> <strong>will</strong> appear truthy. I recommend using built-in predicates (<code>stubbed.authentication? &amp;&amp; ...</code>), presence predicates with ActiveSupport (<code>stubbed.authentication.present? &amp;&amp; ...</code>), Inquisitive's presence utility (<code>Inquisitive.present?(stubbed.authentication) &amp;&amp; ...</code>) or nil predicates (<code>stubbed.authentication.nil? || ...</code>) in boolean chains. Also note that for <code>Inquisitive::Hash</code> access, <code>stubbed.fetch(:authentication, ...)</code> behaves as expected.</p>
+
 <h3>
 <a id="inquisitive-environment" class="anchor" href="#inquisitive-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inquisitive Environment</h3>
 
@@ -230,17 +337,17 @@ stubbed.api.domains.web?
 <h4>
 <a id="strings" class="anchor" href="#strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Strings</h4>
 
-<div class="highlight highlight-ruby"><pre><span class="pl-vo">ENV</span>[<span class="pl-s1"><span class="pl-pds">'</span>ENVIRONMENT<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>development<span class="pl-pds">"</span></span>
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>ENVIRONMENT<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>development<span class="pl-pds">'</span></span>
 <span class="pl-k">class</span> <span class="pl-en">MyApp</span>
-  <span class="pl-k">extend</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-vo">Environment</span>
-  inquires_about <span class="pl-s1"><span class="pl-pds">'</span>ENVIRONMENT<span class="pl-pds">'</span></span>
+  <span class="pl-k">extend</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Environment</span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>ENVIRONMENT<span class="pl-pds">'</span></span>
 <span class="pl-k">end</span>
 
-<span class="pl-s3">MyApp</span>.environment
+<span class="pl-c1">MyApp</span>.environment
 <span class="pl-c">#=&gt; "development"</span>
-<span class="pl-s3">MyApp</span>.environment.development?
+<span class="pl-c1">MyApp</span>.environment.development?
 <span class="pl-c">#=&gt; true</span>
-<span class="pl-s3">MyApp</span>.environment.production?
+<span class="pl-c1">MyApp</span>.environment.production?
 <span class="pl-c">#=&gt; false</span></pre></div>
 
 <h4>
@@ -248,17 +355,17 @@ stubbed.api.domains.web?
 
 <p>Arrays are recognized when environment variables contain commas:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="pl-vo">ENV</span>[<span class="pl-s1"><span class="pl-pds">'</span>SUPPORTED_DATABASES<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>mysql,postgres,sqlite<span class="pl-pds">"</span></span>
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>SUPPORTED_DATABASES<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>mysql,postgres,sqlite<span class="pl-pds">'</span></span>
 <span class="pl-k">class</span> <span class="pl-en">MyApp</span>
-  <span class="pl-k">extend</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-vo">Environment</span>
-  inquires_about <span class="pl-s1"><span class="pl-pds">'</span>SUPPORTED_DATABASES<span class="pl-pds">'</span></span>
+  <span class="pl-k">extend</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Environment</span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>SUPPORTED_DATABASES<span class="pl-pds">'</span></span>
 <span class="pl-k">end</span>
 
-<span class="pl-s3">MyApp</span>.supported_databases
+<span class="pl-c1">MyApp</span>.supported_databases
 <span class="pl-c">#=&gt; ["mysql", "postgres", "sqlite"]</span>
-<span class="pl-s3">MyApp</span>.supported_databases.sqlite?
+<span class="pl-c1">MyApp</span>.supported_databases.sqlite?
 <span class="pl-c">#=&gt; true</span>
-<span class="pl-s3">MyApp</span>.supported_databases.sql_server?
+<span class="pl-c1">MyApp</span>.supported_databases.sql_server?
 <span class="pl-c">#=&gt; false</span></pre></div>
 
 <h4>
@@ -266,84 +373,159 @@ stubbed.api.domains.web?
 
 <p>Hashes are recognized when environment variables names contain double underscores:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="pl-vo">ENV</span>[<span class="pl-s1"><span class="pl-pds">'</span>STUB__AUTHENTICATION<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>true<span class="pl-pds">'</span></span>
-<span class="pl-vo">ENV</span>[<span class="pl-s1"><span class="pl-pds">'</span>STUB__IN<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>development<span class="pl-pds">"</span></span>
-<span class="pl-vo">ENV</span>[<span class="pl-s1"><span class="pl-pds">'</span>STUB__SERVICES<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>database,api<span class="pl-pds">"</span></span>
-<span class="pl-vo">ENV</span>[<span class="pl-s1"><span class="pl-pds">'</span>STUB__API__PROTOCOL<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>https<span class="pl-pds">"</span></span>
-<span class="pl-vo">ENV</span>[<span class="pl-s1"><span class="pl-pds">'</span>STUB__API__SUBDOMAINS<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>app,web,db<span class="pl-pds">"</span></span>
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>STUB__AUTHENTICATION<span class="pl-pds">'</span></span>]  <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>true<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>STUB__IN<span class="pl-pds">'</span></span>]              <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>development<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>STUB__SERVICES<span class="pl-pds">'</span></span>]        <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>database,api<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>STUB__API__PROTOCOL<span class="pl-pds">'</span></span>]   <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>https<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>STUB__API__SUBDOMAINS<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>app,web,db<span class="pl-pds">'</span></span>
 <span class="pl-k">class</span> <span class="pl-en">MyApp</span>
-  <span class="pl-k">extend</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-vo">Environment</span>
-  inquires_about <span class="pl-s1"><span class="pl-pds">'</span>STUB<span class="pl-pds">'</span></span>
+  <span class="pl-k">extend</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Environment</span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>STUB<span class="pl-pds">'</span></span>
 <span class="pl-k">end</span>
 
-<span class="pl-s3">MyApp</span>.stub.authentication?
+<span class="pl-c1">MyApp</span>.stub.authentication?
 <span class="pl-c">#=&gt; true</span>
-<span class="pl-s3">MyApp</span>.stub.registration?
+<span class="pl-c1">MyApp</span>.stub.registration?
 <span class="pl-c">#=&gt; false</span>
-<span class="pl-s3">MyApp</span>.stub.in.development?
+<span class="pl-c1">MyApp</span>.stub.in.development?
 <span class="pl-c">#=&gt; true</span>
-<span class="pl-s3">MyApp</span>.stub.in.production?
+<span class="pl-c1">MyApp</span>.stub.in.production?
 <span class="pl-c">#=&gt; false</span>
-<span class="pl-s3">MyApp</span>.stub.services.exclude.sidekiq?
+<span class="pl-c1">MyApp</span>.stub.services.exclude.sidekiq?
 <span class="pl-c">#=&gt; true</span>
-<span class="pl-s3">MyApp</span>.stub.services.sidekiq?
+<span class="pl-c1">MyApp</span>.stub.services.sidekiq?
 <span class="pl-c">#=&gt; false</span>
-<span class="pl-s3">MyApp</span>.stub.api.protocol.http?
+<span class="pl-c1">MyApp</span>.stub.api.protocol.http?
 <span class="pl-c">#=&gt; false</span>
-<span class="pl-s3">MyApp</span>.stub.api.subdomains.web?
+<span class="pl-c1">MyApp</span>.stub.api.subdomains.web?
+<span class="pl-c">#=&gt; true</span></pre></div>
+
+<h4>
+<a id="defaults" class="anchor" href="#defaults" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defaults</h4>
+
+<p>You can set default values for your environment inquirers.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-k">class</span> <span class="pl-en">MyApp</span>
+  <span class="pl-k">extend</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Environment</span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>ENV<span class="pl-pds">'</span></span>, <span class="pl-c1">default:</span> <span class="pl-s"><span class="pl-pds">'</span>production<span class="pl-pds">'</span></span>
+<span class="pl-k">end</span>
+
+<span class="pl-c1">MyApp</span>.env?
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">MyApp</span>.env.production?
 <span class="pl-c">#=&gt; true</span></pre></div>
 
 <h4>
 <a id="naming" class="anchor" href="#naming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Naming</h4>
 
-<p>You can name your environment inquirers with <code>:with</code>:</p>
+<p>You can also give your environment inquirers custom names:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="pl-vo">ENV</span>[<span class="pl-s1"><span class="pl-pds">'</span>ENVIRONMENT<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>development<span class="pl-pds">"</span></span>
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>ENVIRONMENT<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>development<span class="pl-pds">'</span></span>
 <span class="pl-k">class</span> <span class="pl-en">MyApp</span>
-  <span class="pl-k">extend</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-vo">Environment</span>
-  inquires_about <span class="pl-s1"><span class="pl-pds">'</span>ENVIRONMENT<span class="pl-pds">'</span></span>, <span class="pl-c1">with:</span> <span class="pl-c1">:env</span>
+  <span class="pl-k">extend</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Environment</span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>ENVIRONMENT<span class="pl-pds">'</span></span>, <span class="pl-c1">with:</span> <span class="pl-c1">:env</span>
 <span class="pl-k">end</span>
 
-<span class="pl-s3">MyApp</span>.env
+<span class="pl-c1">MyApp</span>.env
 <span class="pl-c">#=&gt; "development"</span>
-<span class="pl-s3">MyApp</span>.env.development?
+<span class="pl-c1">MyApp</span>.env.development?
 <span class="pl-c">#=&gt; true</span>
-<span class="pl-s3">MyApp</span>.env.production?
+
+<span class="pl-c1">MyApp</span>.env.production?
 <span class="pl-c">#=&gt; false</span></pre></div>
 
 <h4>
-<a id="inquiry-mode" class="anchor" href="#inquiry-mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inquiry mode</h4>
+<a id="presence" class="anchor" href="#presence" aria-hidden="true"><span class="octicon octicon-link"></span></a>Presence</h4>
 
-<p>Environment inquirers have three configurable modes, defaulting to <code>:static</code>.</p>
+<p>Environment inquirers can have explicit presence checks, circumventing a common pitfall when reasoning about environment variables. Borrowing from the example above:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="pl-k">class</span> <span class="pl-en">MyApp</span>
-  <span class="pl-k">extend</span> <span class="pl-s3">Inquisitive</span>::<span class="pl-vo">Environment</span>
-  inquires_about <span class="pl-s1"><span class="pl-pds">'</span>STUB<span class="pl-pds">'</span></span>, <span class="pl-c1">mode:</span> <span class="pl-k">%</span>i[dynamic lazy static].sample
-<span class="pl-k">end</span></pre></div>
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>STUB__AUTHENTICATION<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>false<span class="pl-pds">'</span></span>
+<span class="pl-k">class</span> <span class="pl-en">MyApp</span>
+  <span class="pl-k">extend</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Environment</span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>STUB<span class="pl-pds">'</span></span>
+<span class="pl-k">end</span>
 
-<ul>
-<li>
-<p><strong>Dynamic</strong></p>
+<span class="pl-c1">MyApp</span>.stub.authentication
+<span class="pl-c">#=&gt; "false"</span>
+<span class="pl-c1">MyApp</span>.stub.authentication?
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">MyApp</span>.stub.authentication.true?
+<span class="pl-c">#=&gt; false</span></pre></div>
 
-<p>Environment inquiries parse <code>ENV</code> on every invocation.</p>
+<p>It's common to use the presence of environment variables as runtime booleans. This is frequently done by setting the environment variable to the string <code>"true"</code> when you want it to be true, and not at all otherwise. As demonstrated, this pattern can lead to ambiguity when the string is other values.</p>
 
-<p>Use if you're manipulating the environment in between invocations, so <code>Inquisitive</code> can pick up on new values, detect changes between string or array notation, and discover new keys for hash notation.</p>
-</li>
-<li>
-<p><strong>Lazy</strong></p>
+<p>By default such variables will be parsed as an <code>Inquisitive::String</code>, so predicate methods will return true whatever their contents, as long as they exist. You can bind the predicate method tighter to an explicit value if you prefer:</p>
 
-<p>Environment inquiries check <code>ENV</code> on their first invocation, and re-use the response in future invocations.</p>
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>STUB_AUTHENTICATION<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>false<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>STUB_REGISTRATION<span class="pl-pds">'</span></span>]   <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>true<span class="pl-pds">'</span></span>
+<span class="pl-k">class</span> <span class="pl-en">MyApp</span>
+  <span class="pl-k">extend</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Environment</span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>STUB_AUTHENTICATION<span class="pl-pds">'</span></span>, <span class="pl-c1">present_if:</span> <span class="pl-s"><span class="pl-pds">'</span>true<span class="pl-pds">'</span></span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>STUB_REGISTRATION<span class="pl-pds">'</span></span>,   <span class="pl-c1">present_if:</span> <span class="pl-s"><span class="pl-pds">'</span>true<span class="pl-pds">'</span></span>
+<span class="pl-k">end</span>
 
-<p>Use if you're loading the module with environment inquiry methods before you've finished preparing your environment.</p>
-</li>
-<li>
-<p><strong>Static</strong></p>
+<span class="pl-c1">MyApp</span>.stub_authentication
+<span class="pl-c">#=&gt; "false"</span>
+<span class="pl-c1">MyApp</span>.stub_authentication?
+<span class="pl-c">#=&gt; false</span>
 
-<p>Environment inquiries use the contents of <code>ENV</code> at the moment <code>inquires_about</code> was invoked.</p>
+<span class="pl-c1">MyApp</span>.stub_registration
+<span class="pl-c">#=&gt; "true"</span>
+<span class="pl-c1">MyApp</span>.stub_registration?
+<span class="pl-c">#=&gt; true</span></pre></div>
 
-<p>Use if your application is well-behaved and doesn't go mucking around with the environment at runtim.</p>
-</li>
-</ul>
+<p>This only works on top-level inquirers, so there's no way to get our nested <code>MyApp.stubbed.authentication?</code> to behave as expected. Prefer <code>MyApp.stubbed.authentication.true?</code> instead.</p>
+
+<p>The <code>present_if</code> check uses <code>===</code> under the covers for maximum expressiveness, so you can also use it to match against regexs, classes, and other constructs.</p>
+
+<h5>
+<a id="truthy-strings" class="anchor" href="#truthy-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Truthy Strings</h5>
+
+<p><code>Inquisitive::Environment.truthy</code> contains a regex useful for trying to read truthy values from string environment variables.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>NO<span class="pl-pds">'</span></span>]        <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>no<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>YES<span class="pl-pds">'</span></span>]       <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>yes<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>TRUTHY<span class="pl-pds">'</span></span>]    <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>TrUe<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>FALSEY<span class="pl-pds">'</span></span>]    <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>FaLsE<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>BOOLEAN<span class="pl-pds">'</span></span>]   <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>1<span class="pl-pds">'</span></span>
+<span class="pl-c1">ENV</span>[<span class="pl-s"><span class="pl-pds">'</span>BOOLENOPE<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>0<span class="pl-pds">'</span></span>
+<span class="pl-k">class</span> <span class="pl-en">MyApp</span>
+  <span class="pl-k">extend</span> <span class="pl-c1">Inquisitive</span>::<span class="pl-c1">Environment</span>
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>NO<span class="pl-pds">'</span></span>,        <span class="pl-c1">present_if:</span> truthy
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>YES<span class="pl-pds">'</span></span>,       <span class="pl-c1">present_if:</span> truthy
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>TRUTHY<span class="pl-pds">'</span></span>,    <span class="pl-c1">present_if:</span> truthy
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>FALSEY<span class="pl-pds">'</span></span>,    <span class="pl-c1">present_if:</span> truthy
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>BOOLEAN<span class="pl-pds">'</span></span>,   <span class="pl-c1">present_if:</span> truthy
+  inquires_about <span class="pl-s"><span class="pl-pds">'</span>BOOLENOPE<span class="pl-pds">'</span></span>, <span class="pl-c1">present_if:</span> truthy
+<span class="pl-k">end</span>
+
+<span class="pl-c1">MyApp</span>.no?
+<span class="pl-c">#=&gt; false</span>
+<span class="pl-c1">MyApp</span>.yes?
+<span class="pl-c">#=&gt; true</span>
+
+<span class="pl-c1">MyApp</span>.truthy?
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">MyApp</span>.falsey?
+<span class="pl-c">#=&gt; false</span>
+
+<span class="pl-c1">MyApp</span>.boolean?
+<span class="pl-c">#=&gt; true</span>
+<span class="pl-c1">MyApp</span>.boolenope?
+<span class="pl-c">#=&gt; false</span></pre></div>
+
+<hr>
+
+<h2>
+<a id="origins" class="anchor" href="#origins" aria-hidden="true"><span class="octicon octicon-link"></span></a>Origins</h2>
+
+<p>The idea for Inquisitive originated with <a href="https://github.com/rails/rails/pull/12587">this pull request</a>, as I was going through a complicated Rails application and making it more 12-factor friendly by extracting much of the configuration into environment variables.</p>
+
+<p>By the end of my effort, my configuration was substantially more <em>centralized</em> and <em>standardized</em>, but far more <em>complicated</em>. These complications arose in two places: adding, managing, permuting, and documenting my <code>.env</code> file consumed by <a href="https://github.com/bkeepers/dotenv">dotenv</a>; and organizing, parsing, and switching on those values injected into the <code>ENV</code>.</p>
+
+<p>My pull request, and later Inquisitive, was extracted from my treatment of the latter complication. My solution to the former, <a href="https://github.com/christhekeele/starenv">starenv</a>, was a generally more complicated beast.</p>
+
+<hr>
 
 <h2>
 <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
@@ -355,14 +537,16 @@ stubbed.api.domains.web?
 <li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
 <li>Create new Pull Request</li>
 </ol>
-        </section>
 
-        <footer>
-          Inquisitive is maintained by <a href="https://github.com/christhekeele">christhekeele</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/christhekeele/inquisitive">Inquisitive</a> is maintained by <a href="https://github.com/christhekeele">christhekeele</a>.</span>
 
-                  <script type="text/javascript">
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -373,7 +557,6 @@ stubbed.api.domains.web?
             } catch(err) {}
           </script>
 
-      </div>
-    </div>
   </body>
 </html>
+
