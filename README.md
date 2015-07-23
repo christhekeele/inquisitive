@@ -8,11 +8,11 @@ Inquisitive
 Synopsis
 --------
 
-Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's `StringInquirer`.
+Inquisitive provides String, Array, and Hash subclasses with dynamic predicate methods that allow you to interrogate the most common Ruby datastructures in a readable, friendly fashion. It's the inevitable evolution of ActiveSupport's [`StringInquirer`](https://github.com/rails/rails/blob/master/activesupport/lib/active_support/string_inquirer.rb).
 
 It also allows you to elegantly interrogate your `ENV` hash through the `Inquisitive::Environment` module.
 
-Inquisitive will try to use ActiveSupport's `HashWithIndifferentAccess`, but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from ActiveSupport 4.0.
+Inquisitive will try to use ActiveSupport's [`HashWithIndifferentAccess`](guides.rubyonrails.org/active_support_core_extensions.html#indifferent-access), but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from [ActiveSupport 4.0](https://github.com/rails/rails/blob/4-0-stable/activesupport/lib/active_support/hash_with_indifferent_access.rb).
 
 
 
@@ -41,9 +41,9 @@ Status
 
 [![Version][version-image]][version] [![Quality][quality-image]][quality] [![Dependencies][dependencies-image]][dependencies]
 
-|          :thumbsup:        |   [Continuous Integration][status]  |           [Test Coverage][coverage]      |
+|         :thumbsup:         |  [Continuous Integration][status]   |        [Test Coverage][coverage]         |
 |:--------------------------:|:-----------------------------------:|:----------------------------------------:|
-| [Master][master]           | ![Build Status][master-status]      | ![Coverage Status][master-coverage]      |
+|      [Master][master]      |   ![Build Status][master-status]    |   ![Coverage Status][master-coverage]    |
 | [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] |
 
 
@@ -499,7 +499,7 @@ ENV['TRUTHY']    = 'TrUe'
 ENV['FALSEY']    = 'FaLsE'
 ENV['BOOLEAN']   = '1'
 ENV['BOOLENOPE'] = '0'
-class MyCli
+class MyApp
   extend Inquisitive::Environment
   inquires_about 'NO',        present_if: truthy
   inquires_about 'YES',       present_if: truthy
@@ -524,6 +524,17 @@ MyApp.boolean?
 MyApp.boolenope?
 #=> false
 ```
+
+
+
+Origins
+-------
+
+The idea for Inquisitive originated with [this pull request](https://github.com/rails/rails/pull/12587), as I was going through a complicated Rails application and making it more 12-factor friendly by extracting much of the configuration into environment variables.
+
+By the end of my effort, my configuration was substantially more *centralized* and *standardized*, but far more *complicated*. These complications arose in two places: adding, managing, permuting, and documenting my `.env` file consumed by [dotenv](https://github.com/bkeepers/dotenv); and organizing, parsing, and switching on those values injected into the `ENV`.
+
+My pull request, and later Inquisitive, was extracted from my treatment of the latter complication. My solution to the former, [starenv](https://github.com/christhekeele/starenv), was a generally more complicated beast.
 
 
 
