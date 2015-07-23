@@ -7,6 +7,10 @@ module NilObjectTests
     assert_instance_of Inquisitive::NilClass, nil_object.chain
   end
 
+  def test_nil_object_acts_as_black_hole
+    assert nil_object.respond_to? :anything
+  end
+
   def test_nil_object_match
     assert nil_object.nil?
   end

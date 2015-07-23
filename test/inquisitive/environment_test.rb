@@ -46,6 +46,22 @@ class InquisitiveEnvironmentTest < EnvironmentTest
     end
   end
 
+  %w[false False FaLsE FALSE no No nO NO 0 anything_else].each do |falsey_var|
+    define_method :"test_falsey_var_#{falsey_var}" do
+      App.inquires_about 'TRUTHY', present_if: App.truthy
+      ENV['TRUTHY'] = 'true'
+      assert App.truthy?
+      ENV['TRUTHY'] = falsey_var
+      refute App.truthy?
+    end
+  end
+
+  def test_array_squishing
+    App.inquires_about 'SQUISHIBLE_ARRAY'
+    ENV['SQUISHIBLE_ARRAY'] = 'foo, bar,  baz'
+    assert_equal %w[foo bar baz], App.squishible_array
+  end
+
   def test_default_accessor_for_missing
     App.inquires_about 'MISSING_WITH_DEFAULT', default: 'default'
     assert_equal 'default', App.missing_with_default
