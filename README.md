@@ -3,8 +3,6 @@ Inquisitive
 
 > **Predicate methods for those curious about their datastructures.**
 
-
-
 Synopsis
 --------
 
@@ -14,7 +12,9 @@ It also allows you to elegantly interrogate your `ENV` hash through the `Inquisi
 
 Inquisitive will try to use ActiveSupport's [`HashWithIndifferentAccess`](guides.rubyonrails.org/active_support_core_extensions.html#indifferent-access), but if that cannot be found it will bootstrap itself with a minimal, well-tested version extracted from [ActiveSupport 4.0](https://github.com/rails/rails/blob/4-0-stable/activesupport/lib/active_support/hash_with_indifferent_access.rb).
 
+Inquisitive is tested against all maintained versions of Ruby and ActiveSupport.
 
+--------------------------------------------------------------------------------
 
 Status
 ------
@@ -46,7 +46,7 @@ Status
 |      [Master][master]      |   ![Build Status][master-status]    |   ![Coverage Status][master-coverage]    |
 | [Development][development] | ![Build Status][development-status] | ![Coverage Status][development-coverage] |
 
-
+--------------------------------------------------------------------------------
 
 Installation
 ------------
@@ -64,7 +64,7 @@ Otherwise:
 $ gem install inquisitive
 ```
 
-
+--------------------------------------------------------------------------------
 
 Usage
 -----
@@ -525,7 +525,7 @@ MyApp.boolenope?
 #=> false
 ```
 
-
+--------------------------------------------------------------------------------
 
 Origins
 -------
@@ -536,7 +536,7 @@ By the end of my effort, my configuration was substantially more *centralized* a
 
 My pull request, and later Inquisitive, was extracted from my treatment of the latter complication. My solution to the former, [starenv](https://github.com/christhekeele/starenv), was a generally more complicated beast.
 
-
+--------------------------------------------------------------------------------
 
 Contributing
 ------------
