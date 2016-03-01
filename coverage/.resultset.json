@@ -1,32 +1,32 @@
 {
   "Unit Tests": {
     "coverage": {
-      "/Users/keele/Projects/oss/inquisitive/lib/inquisitive.rb": [
+      "/Users/keele/Projects/oss/ruby/inquisitive/lib/inquisitive.rb": [
         1,
         null,
         1,
         null,
         1,
-        2086,
+        2089,
         null,
         55,
         null,
         1,
         null,
         1,
-        2086,
-        684,
+        2089,
+        685,
         null,
-        1402,
+        1404,
         null,
         null,
         null,
         1,
-        1368,
+        1371,
         null,
         849,
         null,
-        353,
+        354,
         333,
         null,
         null,
@@ -34,7 +34,7 @@
         96,
         null,
         null,
-        64,
+        66,
         null,
         11,
         1,
@@ -45,7 +45,7 @@
         null,
         null,
         1,
-        2086,
+        2089,
         null,
         null,
         null,
@@ -61,7 +61,7 @@
         1,
         1
       ],
-      "/Users/keele/Projects/oss/inquisitive/lib/inquisitive/nil_class.rb": [
+      "/Users/keele/Projects/oss/ruby/inquisitive/lib/inquisitive/nil_class.rb": [
         1,
         null,
         1,
@@ -100,6 +100,10 @@
         null,
         null,
         1,
+        2,
+        null,
+        null,
+        1,
         null,
         1,
         2,
@@ -121,7 +125,7 @@
         null,
         null
       ],
-      "/Users/keele/Projects/oss/inquisitive/lib/inquisitive/utils.rb": [
+      "/Users/keele/Projects/oss/ruby/inquisitive/lib/inquisitive/utils.rb": [
         1,
         null,
         1,
@@ -140,7 +144,7 @@
         null,
         null
       ],
-      "/Users/keele/Projects/oss/inquisitive/lib/inquisitive/string.rb": [
+      "/Users/keele/Projects/oss/ruby/inquisitive/lib/inquisitive/string.rb": [
         1,
         null,
         1,
@@ -172,7 +176,7 @@
         null,
         null
       ],
-      "/Users/keele/Projects/oss/inquisitive/lib/inquisitive/array.rb": [
+      "/Users/keele/Projects/oss/ruby/inquisitive/lib/inquisitive/array.rb": [
         1,
         null,
         1,
@@ -204,7 +208,7 @@
         null,
         null
       ],
-      "/Users/keele/Projects/oss/inquisitive/lib/inquisitive/hash_with_indifferent_access.rb": [
+      "/Users/keele/Projects/oss/ruby/inquisitive/lib/inquisitive/hash_with_indifferent_access.rb": [
         1,
         null,
         null,
@@ -396,7 +400,7 @@
         null,
         null
       ],
-      "/Users/keele/Projects/oss/inquisitive/lib/inquisitive/hash.rb": [
+      "/Users/keele/Projects/oss/ruby/inquisitive/lib/inquisitive/hash.rb": [
         1,
         null,
         1,
@@ -467,7 +471,7 @@
         null,
         null
       ],
-      "/Users/keele/Projects/oss/inquisitive/lib/inquisitive/environment.rb": [
+      "/Users/keele/Projects/oss/ruby/inquisitive/lib/inquisitive/environment.rb": [
         1,
         null,
         1,
@@ -480,25 +484,25 @@
         null,
         1,
         null,
-        104,
-        104,
-        104,
-        104,
+        105,
+        105,
+        105,
+        105,
         null,
-        104,
-        125,
+        105,
+        126,
         44,
         null,
+        80,
+        126,
+        null,
+        null,
+        105,
         79,
-        125,
-        null,
-        null,
-        104,
-        78,
         null,
         57,
         null,
-        21,
+        22,
         null,
         null,
         null,
@@ -511,7 +515,7 @@
         1,
         null,
         1,
-        462,
+        463,
         null,
         384,
         384,
@@ -530,17 +534,17 @@
         null,
         null,
         null,
-        462,
+        463,
         null,
         null,
         1,
-        78,
-        78,
+        79,
+        79,
         null,
         null,
         1,
-        78,
-        6068,
+        79,
+        5908,
         null,
         null,
         null,
@@ -565,7 +569,7 @@
         null,
         null,
         1,
-        744,
+        745,
         null,
         null,
         null,
@@ -575,6 +579,6 @@
         null
       ]
     },
-    "timestamp": 1437658956
+    "timestamp": 1456850519
   }
 }

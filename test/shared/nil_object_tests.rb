@@ -66,4 +66,8 @@ module NilObjectTests
     refute hash.no.no.development?
   end
 
+  def test_nil_coercable_to_empty_string
+    assert_equal nil_object.to_str, ""
+  end
+
 end

@@ -35,6 +35,10 @@ module Inquisitive
       other.class == Class and other == ::NilClass or super
     end
 
+    def to_str
+      ""
+    end
+
   private
 
     def respond_to_missing?(method_name, include_private = false)
