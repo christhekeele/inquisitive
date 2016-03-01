@@ -14,7 +14,7 @@
       <img src="./assets/0.8.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2016-03-01T10:41:59-06:00">2016-03-01T10:41:59-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2016-03-01T10:45:13-06:00">2016-03-01T10:45:13-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,15 +25,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         200.96
+         198.98
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>8</b> files in total.
-    <b>293</b> relevant lines. 
-    <span class="green"><b>293</b> lines covered</span> and
+    <b>297</b> relevant lines. 
+    <span class="green"><b>297</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -57,7 +57,7 @@
         <td>30</td>
         <td>30</td>
         <td>0</td>
-        <td>386.9</td>
+        <td>388.1</td>
       </tr>
       
       <tr>
@@ -77,7 +77,7 @@
         <td>51</td>
         <td>51</td>
         <td>0</td>
-        <td>246.8</td>
+        <td>250.2</td>
       </tr>
       
       <tr>
@@ -103,11 +103,11 @@
       <tr>
         <td class="strong"><a href="#1fc026631443335f891a1aaff5962add0560238a" class="src_link" title="lib/inquisitive/nil_class.rb">lib/inquisitive/nil_class.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>62</td>
-        <td>34</td>
-        <td>34</td>
+        <td>68</td>
+        <td>38</td>
+        <td>38</td>
         <td>0</td>
-        <td>10.1</td>
+        <td>9.2</td>
       </tr>
       
       <tr>
@@ -190,8 +190,8 @@
           <code class="ruby">    def coerce(object)</code>
         </li>
       
-        <li class="covered" data-hits="2089" data-linenumber="6">
-          <span class="hits">2089</span>
+        <li class="covered" data-hits="2095" data-linenumber="6">
+          <span class="hits">2095</span>
           
           <code class="ruby">      coerce! object</code>
         </li>
@@ -232,14 +232,14 @@
           <code class="ruby">    def coerce!(object)</code>
         </li>
       
-        <li class="covered" data-hits="2089" data-linenumber="13">
-          <span class="hits">2089</span>
+        <li class="covered" data-hits="2095" data-linenumber="13">
+          <span class="hits">2095</span>
           
           <code class="ruby">      if Inquisitive.object? object</code>
         </li>
       
-        <li class="covered" data-hits="685" data-linenumber="14">
-          <span class="hits">685</span>
+        <li class="covered" data-hits="687" data-linenumber="14">
+          <span class="hits">687</span>
           
           <code class="ruby">        object</code>
         </li>
@@ -250,8 +250,8 @@
           <code class="ruby">      else</code>
         </li>
       
-        <li class="covered" data-hits="1404" data-linenumber="16">
-          <span class="hits">1404</span>
+        <li class="covered" data-hits="1408" data-linenumber="16">
+          <span class="hits">1408</span>
           
           <code class="ruby">        Inquisitive.const_get(:&quot;#{object.class}&quot;, false).new object</code>
         </li>
@@ -280,8 +280,8 @@
           <code class="ruby">    def present?(object)</code>
         </li>
       
-        <li class="covered" data-hits="1371" data-linenumber="21">
-          <span class="hits">1371</span>
+        <li class="covered" data-hits="1377" data-linenumber="21">
+          <span class="hits">1377</span>
           
           <code class="ruby">      case object</code>
         </li>
@@ -304,8 +304,8 @@
           <code class="ruby">      when ::Array, Array</code>
         </li>
       
-        <li class="covered" data-hits="354" data-linenumber="25">
-          <span class="hits">354</span>
+        <li class="covered" data-hits="356" data-linenumber="25">
+          <span class="hits">356</span>
           
           <code class="ruby">        object.any? do |value|</code>
         </li>
@@ -352,8 +352,8 @@
           <code class="ruby">      when ::NilClass, NilClass</code>
         </li>
       
-        <li class="covered" data-hits="66" data-linenumber="33">
-          <span class="hits">66</span>
+        <li class="covered" data-hits="70" data-linenumber="33">
+          <span class="hits">70</span>
           
           <code class="ruby">        false</code>
         </li>
@@ -418,8 +418,8 @@
           <code class="ruby">    def object?(object)</code>
         </li>
       
-        <li class="covered" data-hits="2089" data-linenumber="44">
-          <span class="hits">2089</span>
+        <li class="covered" data-hits="2095" data-linenumber="44">
+          <span class="hits">2095</span>
           
           <code class="ruby">      object.class.name.start_with? &#39;Inquisitive::&#39;</code>
         </li>
@@ -796,26 +796,26 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="105" data-linenumber="13">
-          <span class="hits">105</span>
+        <li class="covered" data-hits="107" data-linenumber="13">
+          <span class="hits">107</span>
           
           <code class="ruby">      env_accessor = opts.fetch(:with, env_var.downcase[/(.*?)(?=(?:_$|$))/]).to_sym</code>
         </li>
       
-        <li class="covered" data-hits="105" data-linenumber="14">
-          <span class="hits">105</span>
+        <li class="covered" data-hits="107" data-linenumber="14">
+          <span class="hits">107</span>
           
           <code class="ruby">      env_presence = :&quot;#{env_accessor}?&quot;</code>
         </li>
       
-        <li class="covered" data-hits="105" data-linenumber="15">
-          <span class="hits">105</span>
+        <li class="covered" data-hits="107" data-linenumber="15">
+          <span class="hits">107</span>
           
           <code class="ruby">      env_default  = opts[:default]</code>
         </li>
       
-        <li class="covered" data-hits="105" data-linenumber="16">
-          <span class="hits">105</span>
+        <li class="covered" data-hits="107" data-linenumber="16">
+          <span class="hits">107</span>
           
           <code class="ruby">      present_if = opts[:present_if]</code>
         </li>
@@ -826,14 +826,14 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="105" data-linenumber="18">
-          <span class="hits">105</span>
+        <li class="covered" data-hits="107" data-linenumber="18">
+          <span class="hits">107</span>
           
           <code class="ruby">      define_singleton_method env_presence do |opts={with_default: true}|</code>
         </li>
       
-        <li class="covered" data-hits="126" data-linenumber="19">
-          <span class="hits">126</span>
+        <li class="covered" data-hits="128" data-linenumber="19">
+          <span class="hits">128</span>
           
           <code class="ruby">        !!(opts[:with_default] and env_default) || if present_if</code>
         </li>
@@ -850,14 +850,14 @@
           <code class="ruby">        else</code>
         </li>
       
-        <li class="covered" data-hits="80" data-linenumber="22">
-          <span class="hits">80</span>
+        <li class="covered" data-hits="82" data-linenumber="22">
+          <span class="hits">82</span>
           
           <code class="ruby">          Inquisitive.present? Inquisitive[Parser[env_var]]</code>
         </li>
       
-        <li class="covered" data-hits="126" data-linenumber="23">
-          <span class="hits">126</span>
+        <li class="covered" data-hits="128" data-linenumber="23">
+          <span class="hits">128</span>
           
           <code class="ruby">        end</code>
         </li>
@@ -874,14 +874,14 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="105" data-linenumber="26">
-          <span class="hits">105</span>
+        <li class="covered" data-hits="107" data-linenumber="26">
+          <span class="hits">107</span>
           
           <code class="ruby">      define_singleton_method env_accessor do</code>
         </li>
       
-        <li class="covered" data-hits="79" data-linenumber="27">
-          <span class="hits">79</span>
+        <li class="covered" data-hits="81" data-linenumber="27">
+          <span class="hits">81</span>
           
           <code class="ruby">        Inquisitive[</code>
         </li>
@@ -904,8 +904,8 @@
           <code class="ruby">          else</code>
         </li>
       
-        <li class="covered" data-hits="22" data-linenumber="31">
-          <span class="hits">22</span>
+        <li class="covered" data-hits="24" data-linenumber="31">
+          <span class="hits">24</span>
           
           <code class="ruby">            env_default</code>
         </li>
@@ -982,8 +982,8 @@
           <code class="ruby">        def [](var_name)</code>
         </li>
       
-        <li class="covered" data-hits="463" data-linenumber="44">
-          <span class="hits">463</span>
+        <li class="covered" data-hits="465" data-linenumber="44">
+          <span class="hits">465</span>
           
           <code class="ruby">          result = if ENV.has_key? var_name.to_s</code>
         </li>
@@ -1096,8 +1096,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="463" data-linenumber="63">
-          <span class="hits">463</span>
+        <li class="covered" data-hits="465" data-linenumber="63">
+          <span class="hits">465</span>
           
           <code class="ruby">          replace_empty result</code>
         </li>
@@ -1120,14 +1120,14 @@
           <code class="ruby">        def can_find_env_keys_from(var_name)</code>
         </li>
       
-        <li class="covered" data-hits="79" data-linenumber="67">
-          <span class="hits">79</span>
+        <li class="covered" data-hits="81" data-linenumber="67">
+          <span class="hits">81</span>
           
           <code class="ruby">          found = env_keys_from(var_name)</code>
         </li>
       
-        <li class="covered" data-hits="79" data-linenumber="68">
-          <span class="hits">79</span>
+        <li class="covered" data-hits="81" data-linenumber="68">
+          <span class="hits">81</span>
           
           <code class="ruby">          Inquisitive.present?(found) ? found : nil</code>
         </li>
@@ -1150,14 +1150,14 @@
           <code class="ruby">        def env_keys_from(var_name)</code>
         </li>
       
-        <li class="covered" data-hits="79" data-linenumber="72">
-          <span class="hits">79</span>
+        <li class="covered" data-hits="81" data-linenumber="72">
+          <span class="hits">81</span>
           
           <code class="ruby">          ENV.keys.select do |key|</code>
         </li>
       
-        <li class="covered" data-hits="5908" data-linenumber="73">
-          <span class="hits">5908</span>
+        <li class="covered" data-hits="6049" data-linenumber="73">
+          <span class="hits">6049</span>
           
           <code class="ruby">            key =~ /^#{var_name}__/</code>
         </li>
@@ -1306,8 +1306,8 @@
           <code class="ruby">        def replace_empty(value)</code>
         </li>
       
-        <li class="covered" data-hits="745" data-linenumber="98">
-          <span class="hits">745</span>
+        <li class="covered" data-hits="747" data-linenumber="98">
+          <span class="hits">747</span>
           
           <code class="ruby">          Inquisitive.present?(value) ? value : NilClass.new(nil)</code>
         </li>
@@ -2953,8 +2953,8 @@
     <h3>lib/inquisitive/nil_class.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>34</b> relevant lines. 
-      <span class="green"><b>34</b> lines covered</span> and
+      <b>38</b> relevant lines. 
+      <span class="green"><b>38</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -3202,34 +3202,34 @@
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="41">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="42">
+        <li class="covered" data-hits="1" data-linenumber="41">
           <span class="hits">1</span>
           
-          <code class="ruby">  private</code>
+          <code class="ruby">    def to_ary</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="42">
+          <span class="hits">2</span>
+          
+          <code class="ruby">      []</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="43">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="44">
           <span class="hits">1</span>
           
-          <code class="ruby">    def respond_to_missing?(method_name, include_private = false)</code>
+          <code class="ruby">    def to_hash</code>
         </li>
       
         <li class="covered" data-hits="2" data-linenumber="45">
           <span class="hits">2</span>
           
-          <code class="ruby">      true # nil.respond_to? method_name or predicate_method? method_name</code>
+          <code class="ruby">      {}</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="46">
@@ -3238,97 +3238,133 @@
           <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="47">
+        <li class="never" data-hits="" data-linenumber="47">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="48">
           <span class="hits">1</span>
           
-          <code class="ruby">    def method_missing(method_name, *arguments, &amp;block)</code>
+          <code class="ruby">  private</code>
         </li>
       
-        <li class="covered" data-hits="24" data-linenumber="48">
-          <span class="hits">24</span>
+        <li class="never" data-hits="" data-linenumber="49">
           
-          <code class="ruby">      if nil.respond_to? method_name</code>
+          
+          <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="49">
+        <li class="covered" data-hits="1" data-linenumber="50">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def respond_to_missing?(method_name, include_private = false)</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="51">
           <span class="hits">2</span>
           
-          <code class="ruby">        nil.send method_name, *arguments, &amp;block</code>
-        </li>
-      
-        <li class="covered" data-hits="22" data-linenumber="50">
-          <span class="hits">22</span>
-          
-          <code class="ruby">      elsif predicate_method? method_name</code>
-        </li>
-      
-        <li class="covered" data-hits="20" data-linenumber="51">
-          <span class="hits">20</span>
-          
-          <code class="ruby">        presence</code>
+          <code class="ruby">      true # nil.respond_to? method_name or predicate_method? method_name</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="52">
           
           
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="53">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def method_missing(method_name, *arguments, &amp;block)</code>
+        </li>
+      
+        <li class="covered" data-hits="24" data-linenumber="54">
+          <span class="hits">24</span>
+          
+          <code class="ruby">      if nil.respond_to? method_name</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="55">
+          <span class="hits">2</span>
+          
+          <code class="ruby">        nil.send method_name, *arguments, &amp;block</code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="56">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      elsif predicate_method? method_name</code>
+        </li>
+      
+        <li class="covered" data-hits="20" data-linenumber="57">
+          <span class="hits">20</span>
+          
+          <code class="ruby">        presence</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="58">
+          
+          
           <code class="ruby">      else</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="53">
+        <li class="covered" data-hits="2" data-linenumber="59">
           <span class="hits">2</span>
           
           <code class="ruby">        self</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="54">
+        <li class="never" data-hits="" data-linenumber="60">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="55">
+        <li class="never" data-hits="" data-linenumber="61">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="56">
+        <li class="never" data-hits="" data-linenumber="62">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="57">
+        <li class="covered" data-hits="1" data-linenumber="63">
           <span class="hits">1</span>
           
           <code class="ruby">    def presence</code>
         </li>
       
-        <li class="covered" data-hits="26" data-linenumber="58">
+        <li class="covered" data-hits="26" data-linenumber="64">
           <span class="hits">26</span>
           
           <code class="ruby">      false ^ negated</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="59">
+        <li class="never" data-hits="" data-linenumber="65">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="60">
+        <li class="never" data-hits="" data-linenumber="66">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="61">
+        <li class="never" data-hits="" data-linenumber="67">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="62">
+        <li class="never" data-hits="" data-linenumber="68">
           
           
           <code class="ruby">end</code>

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'inquisitive'
-  spec.version       = '4.0.1'
+  spec.version       = '4.0.2'
   spec.authors       = ['Chris Keele']
   spec.email         = ['dev@chriskeele.com']
   spec.summary       = 'Predicate methods for those curious about their datastructures.'

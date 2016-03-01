@@ -69,5 +69,11 @@ module NilObjectTests
   def test_nil_coercable_to_empty_string
     assert_equal nil_object.to_str, ""
   end
+  def test_nil_coercable_to_empty_array
+    assert_equal nil_object.to_ary, []
+  end
+  def test_nil_coercable_to_empty_hash
+    assert_equal nil_object.to_hash, {}
+  end
 
 end

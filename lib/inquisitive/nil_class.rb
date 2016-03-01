@@ -38,6 +38,12 @@ module Inquisitive
     def to_str
       ""
     end
+    def to_ary
+      []
+    end
+    def to_hash
+      {}
+    end
 
   private
 
